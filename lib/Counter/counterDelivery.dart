@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class paymentstatus extends StatefulWidget {
-  const paymentstatus({Key? key}) : super(key: key);
+class counterdelivery extends StatefulWidget {
+  const counterdelivery({Key? key}) : super(key: key);
 
   @override
-  State<paymentstatus> createState() => _paymentstatusState();
+  State<counterdelivery> createState() => _counterdeliveryState();
 }
 
-class _paymentstatusState extends State<paymentstatus> {
+class _counterdeliveryState extends State<counterdelivery> {
   final List<String> imageTitles = [
     "Customername:shamli",
     "Customername:shamli",
@@ -20,21 +20,17 @@ class _paymentstatusState extends State<paymentstatus> {
     "Order id:114456",
     "Order id:114456"
   ];
-  final List<String> PaymetMethod = [
-    "card",
-    "UPI",
-    "netbanking",
-    "Bank transfer"
+  final List<String> Phonenumerber = [
+    "9895780059",
+    "9895780059",
+    "9895780059",
+    "9895780059"
   ];
-  final List<String> Amount = [ "Amount:9648", "Amount:648", "Amount:48", "Amount:29648"];
-  final List<String> Date = [ "Date:12-1-2023", "Date:12-1-2023", "Date:12-1-2023", "Date:12-1-2023"];
-  final List<String> Time = [ "Time:12.00pm", "Time:1.00pm", "Time:2.00pm", "Time:3.00pm"];
-  final List<String> phonenumber = [ "9895780059", "9895780059", "9895780059.", "9895780059"];
-  bool _isExpanded = false;
 
+  bool _isExpanded = false;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return  Scaffold(
       appBar: AppBar(
         // Overide the default Back button
         automaticallyImplyLeading: false,
@@ -61,7 +57,7 @@ class _paymentstatusState extends State<paymentstatus> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
 
-              Text("Payment Status",
+              Text("Delivery Status",
                   style: TextStyle(fontWeight: FontWeight.w400, fontSize: 40)),
 
               ListView.separated(
@@ -75,17 +71,19 @@ class _paymentstatusState extends State<paymentstatus> {
                 itemCount: 4,
                 itemBuilder: (context, index) {
                   return Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Card(
-                      child: Padding(
-                        padding: const EdgeInsets.all(10),
-                        child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      padding: const EdgeInsets.all(8.0),
+                      child: Card(
+                        child: Padding(
+                          padding: const EdgeInsets.all(10),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment
+                                .spaceBetween,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             // mainAxisSize: MainAxisSize.min,
                             children: [
                               CircleAvatar(
-                                  backgroundImage: AssetImage("images/two.jpg")
+                                  backgroundImage: AssetImage(
+                                      "images/two.jpg")
 
 
                                 // child: Image.asset(containerImages[index],fit: BoxFit.cover,),
@@ -98,50 +96,55 @@ class _paymentstatusState extends State<paymentstatus> {
                               Column(
                                 children: [
                                   Text("${imageTitles[index]}",
-                                    style: TextStyle(color: Colors.grey[600]),
+                                    style: TextStyle(
+                                        color: Colors.grey[600]),
                                   ),
 
                                   Text("${Titles[index]}",
-                                      style: TextStyle(color: Colors.grey[600]),
+                                    style: TextStyle(
+                                        color: Colors.grey[600]),
                                   ),
 
-                                  Text("Paymet Method:${ PaymetMethod[index]}",
-                                    style: TextStyle(color: Colors.grey[600]),
+                                  Text(
+                                    "Paymet Method:${ Phonenumerber[index]}",
+                                    style: TextStyle(
+                                        color: Colors.grey[600]),
                                   ),
-                                  Text("${Date[index]}",
-                                    style: TextStyle(color: Colors.grey[500]),
-                                  ),
-                                  Text("${Time[index]}",
-                                    style: TextStyle(color: Colors.grey[500]),
-                                  ),
+
                                 ],
                               ),
+                              Center(child: TextButton(onPressed: () {
+                                setState(() {
+                                  _isExpanded = !_isExpanded;
+                                });
+                              }, child: Column(
+                                children: [
+                                  Text(" To Deliver",
+                                    style: TextStyle(fontSize: 18.0),),
 
-                                  Text("${Amount[index]}",
-                                    style: TextStyle(color: Colors.lightBlue),
-                                  ),
-
-                      Icon(Icons.check_circle, color: Colors.green,),
-
-
-
-
-
-                            ]),
+                                ],
 
 
-                      ),
+                              ),
 
 
-                    ),
+                              ),
+                              )
+
+
+                            ],
+                          ),
+
+                        ),
+                      )
+
                   );
-                },
-              ),
-            ]
-        ),
-      ),
-
+                }
+    ),
+    ]
+    )
+    )
     );
+
   }
 }
-

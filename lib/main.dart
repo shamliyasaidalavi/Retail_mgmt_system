@@ -3,6 +3,7 @@ import 'package:trip/Counter/todaysale.dart';
 import 'package:trip/Counter/todaysalesmoredetails.dart';
 import 'package:trip/Couter.dart';
 import 'package:trip/Godown/OrderDetails.dart';
+import 'package:trip/Counter/counterDelivery.dart';
 import 'package:trip/delivery/M%20delivery.dart';
 import 'package:trip/delivery/cancelledorder.dart';
 import 'package:trip/User/cart.dart';
@@ -35,7 +36,7 @@ class retail extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home:      salesmoredetails
+      home:      counterdelivery
       (),);
   }
 
