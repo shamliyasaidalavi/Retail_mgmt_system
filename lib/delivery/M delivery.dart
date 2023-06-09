@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:trip/loginpage.dart';
+
+import 'cancelledorder.dart';
+import 'closedorder.dart';
+import 'opendelivery.dart';
 class Deliveryguy extends StatefulWidget {
   const Deliveryguy({Key? key}) : super(key: key);
   @override
@@ -9,7 +14,12 @@ class _DeliveryguyState extends State<Deliveryguy> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(  appBar: AppBar(
-      leading: IconButton(onPressed: (){},icon : Icon(Icons.menu),color: Colors.green,),
+      leading: IconButton(onPressed: (){
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => Login()),
+        );
+      },icon : Icon(Icons.menu),color: Colors.green,),
       title: Center(
         child: Text(
           "Retail managemnt system",style: TextStyle(color: Colors.blueGrey),
@@ -96,68 +106,90 @@ class _DeliveryguyState extends State<Deliveryguy> {
             Divider(),
             Padding(
               padding: const EdgeInsets.only(left: 20,right: 20),
-              child: Container(
-                decoration: BoxDecoration(borderRadius: BorderRadius.circular(15),color: Colors.grey[200]),
-                height: 100,
-                width: double.infinity,
+              child: GestureDetector(onTap: (){
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Openorder()),
+                );
+              },
+                child: Container(
+                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(15),color: Colors.grey[200]),
+                  height: 100,
+                  width: double.infinity,
 
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(Icons.open_in_browser,color: Colors.red,size: 40,),
-                    Text("Open Order",
-                      style: TextStyle(
-                          fontSize: 20
-                      ),
-                    )
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.open_in_browser,color: Colors.red,size: 40,),
+                      Text("Open Order",
+                        style: TextStyle(
+                            fontSize: 20
+                        ),
+                      )
 
-                  ],
+                    ],
+                  ),
+
                 ),
-
               ),
             ),
             Padding(
               padding: const EdgeInsets.only(top: 20,left: 20,right: 20),
-              child: Container(
-                height: 100,
-                width: double.infinity,
-                color: Colors.grey[200],
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(Icons.cancel,color: Colors.red,size: 40,),
-                    Text("Closed Order ",
-                      style: TextStyle(
-                          fontSize: 20
-                      ),
-                    )
+              child: GestureDetector(
+                onTap: (){
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => closedorder()),
+                  );
+                },
+                child: Container(
+                  height: 100,
+                  width: double.infinity,
+                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(15),color: Colors.grey[200]),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.cancel,color: Colors.red,size: 40,),
+                      Text("Closed Order ",
+                        style: TextStyle(
+                            fontSize: 20
+                        ),
+                      )
 
-                  ],
+                    ],
+                  ),
+
+
                 ),
-
-
               ),
             ),
             Padding(
               padding: const EdgeInsets.only(top: 20,left: 20,right: 20),
-              child: Container(
-                height: 100,
-                width: double.infinity,
-                color: Colors.grey[200],
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(Icons.close,color: Colors.red,size: 40,),
-                    Text("Cancelled Order",
-                      style: TextStyle(
-                          fontSize: 12
-                      ),
-                    )
+              child: GestureDetector(onTap: (){
+    Navigator.push(
+    context,
+    MaterialPageRoute(builder: (context) => cancelledorder()),
+    );
+    },
+                child: Container(
+                  height: 100,
+                  width: double.infinity,
+                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(15),color: Colors.grey[200]),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.close,color: Colors.red,size: 40,),
+                      Text("Cancelled Order",
+                        style: TextStyle(
+                            fontSize: 20
+                        ),
+                      )
 
-                  ],
+                    ],
+                  ),
+
+
                 ),
-
-
               ),
             )
           ],

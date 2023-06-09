@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:trip/User/historydetails.dart';
 
 class History extends StatefulWidget {
   const History({Key? key}) : super(key: key);
@@ -124,10 +125,14 @@ class _HistoryState extends State<History> {
                               ),
 
 
-                              Center(child: TextButton(onPressed:(){setState(() {
+                              Center(child: TextButton(onPressed:(){
+                                setState(() {
                                 _isExpanded=!_isExpanded;
                               });
-
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => Moredetails()),
+                                );
                               }, child: Column(
                                 children: [
                                   Text("More Details",style:TextStyle(fontSize: 18.0) ,),

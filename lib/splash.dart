@@ -1,8 +1,13 @@
 
 import 'dart:async';
 
+import 'package:google_fonts/google_fonts.dart';
 import 'package:trip/homepage.dart';
 import 'package:flutter/material.dart';
+import 'package:trip/loginpage.dart';
+import 'package:trip/welcomepage.dart';
+
+import 'User/homepage2.dart';
 
 class Splash extends StatefulWidget {
   const Splash({Key? key}) : super(key: key);
@@ -18,7 +23,7 @@ class _SplashState extends State<Splash> {
     Timer(
         Duration(seconds: 3),
             () => Navigator.of(context).pushReplacement(MaterialPageRoute(
-            builder: (BuildContext context) => Splash())));
+            builder: (BuildContext context) => Welcome())));
   }
   @override
   Widget build(BuildContext context) {
@@ -29,19 +34,18 @@ class _SplashState extends State<Splash> {
         children: [
         Padding(  padding: const EdgeInsets.all(8.0),
           child: Text(
-            " lets order fresh item for you",
-            style: TextStyle(
-                fontSize: 30,
-                fontWeight: FontWeight.bold,
-                color: Colors.red),
+           '" Lets order fresh items"',
+            style: TextStyle(fontSize:30,fontFamily: 'RobotoMono',color: Colors.lightBlueAccent),
+
           ),
-        ),             Center(
+        ),
+          Center(
 
             child: Container(
               height: 250,
               width: 300,
               decoration: BoxDecoration(
-                image: DecorationImage(image: AssetImage("images/one.jpg"),fit: BoxFit.cover),
+                image: DecorationImage(image: AssetImage("images/istockphoto-1319625327-1024x1024-transformed-removebg-preview.png"),fit: BoxFit.cover),
               ),
             ),
           ),

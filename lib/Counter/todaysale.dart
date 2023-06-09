@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'todaysalesmoredetails.dart';
+
 class todaysales extends StatefulWidget {
   const todaysales({Key? key}) : super(key: key);
 
@@ -101,8 +103,13 @@ class _todaysalesState extends State<todaysales> {
 
 
                               Center(child: TextButton(onPressed:(){setState(() {
+
                                 _isExpanded=!_isExpanded;
                               });
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => salesmoredetails()),
+                              );
 
                               }, child: Column(
                                 children: [

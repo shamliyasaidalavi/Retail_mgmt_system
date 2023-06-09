@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'dart:async';
+import 'package:flutter/services.dart';
+
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 
 class Homepage1 extends StatefulWidget {
   const Homepage1({Key? key}) : super(key: key);
@@ -13,6 +17,7 @@ final List<String> containerImages = [
   'images/two.jpg',
   'images/three.jpg',
   'images/two.jpg',
+  'images/three.jpg',
   'images/three.jpg',
 ];
 final List<String> _listText = [
@@ -38,7 +43,28 @@ class _Homepage1State extends State<Homepage1> {
       _selectedIndex = index;
     });
   }
-
+  String _scanBarcode = 'Unknown';
+  /// For Continuous scan
+  Future<void> startBarcodeScanStream() async {
+    FlutterBarcodeScanner.getBarcodeStreamReceiver(
+        '#ff6666', 'Cancel', true, ScanMode.BARCODE)!
+        .listen((barcode) => print(barcode));
+  }
+  Future<void> barcodeScan() async {
+    String barcodeScanRes;
+    // Platform messages may fail, so we use a try/catch PlatformException.
+    try {
+      barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
+          '#ff6666', 'Cancel', true, ScanMode.QR);
+      print(barcodeScanRes);
+    } on PlatformException {
+      barcodeScanRes = 'Failed to get platform version.';
+    }
+    if (!mounted) return;
+    setState(() {
+      _scanBarcode = barcodeScanRes;
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,7 +73,8 @@ class _Homepage1State extends State<Homepage1> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: Icon(
-          Icons.menu,
+          Icons.menu,color: Colors.black,
+
         ),
         title: Text("Home",
             style: TextStyle(
@@ -109,13 +136,9 @@ class _Homepage1State extends State<Homepage1> {
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10),
                                     color: Colors.white),
-                                child: Center(
-                                    child: Text(
-                                  "Scan Now",
-                                  style: TextStyle(
-                                      color: Colors.grey[900],
-                                      fontWeight: FontWeight.bold),
-                                )),
+                                child: ElevatedButton( style: ElevatedButton.styleFrom(
+                                  primary: Colors.white, // Background color
+                                ),onPressed: ()=> barcodeScan(), child: Text("Scan Now",style: TextStyle(fontSize: 24,color: Colors.black),),),
                               ),
                               SizedBox(
                                 height: 30,
@@ -134,7 +157,7 @@ class _Homepage1State extends State<Homepage1> {
                               "Categories",
                               style: TextStyle(
                                   color: Colors.black,
-                                  fontSize: 35,
+                                  fontSize: 30,
                                   fontWeight: FontWeight.bold),
                             ),
                           ]),
@@ -154,8 +177,9 @@ class _Homepage1State extends State<Homepage1> {
                                 children: [
                                   Container(
                                     width: 120,
+                                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
                                     child: Image.asset(containerImages[index],
-                                        fit: BoxFit.cover),
+                                        fit: BoxFit.cover,),
                                   ),
                                   Text("${imageTitles[index]}")
                                 ]);
@@ -172,7 +196,7 @@ class _Homepage1State extends State<Homepage1> {
                               "Special Deal ",
                               style: TextStyle(
                                   color: Colors.black,
-                                  fontSize: 35,
+                                  fontSize: 30,
                   fontWeight: FontWeight.bold),
           ),
           ]),
@@ -207,36 +231,30 @@ class _Homepage1State extends State<Homepage1> {
                       ),
                     ],
                   )))),
-      bottomNavigationBar: BottomNavigationBar(
-        selectedItemColor: Colors.blue,
-        unselectedItemColor: Colors.black,
-        type: BottomNavigationBarType.shifting,
-        currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'home',
-          ),
-
-          BottomNavigationBarItem(
-            icon: Icon(Icons.trolley),
-            label: 'cart',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.payment),
-            label: 'payment',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.history),
-            label: 'History',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.delivery_dining),
-            label: 'Delivery',
-          ),
-        ],
-      ),
+      // bottomNavigationBar: BottomNavigationBar(
+      //   selectedItemColor: Colors.blue,
+      //   unselectedItemColor: Colors.black,
+      //   type: BottomNavigationBarType.shifting,
+      //   currentIndex: _selectedIndex,
+      //   onTap: _onItemTapped,
+      //   items: const <BottomNavigationBarItem>[
+      //     BottomNavigationBarItem(
+      //       icon: Icon(Icons.home),
+      //       label: 'home',
+      //     ),
+      //
+      //     BottomNavigationBarItem(
+      //       icon: Icon(Icons.trolley),
+      //       label: 'cart',
+      //     ),
+      //
+      //     BottomNavigationBarItem(
+      //       icon: Icon(Icons.history),
+      //       label: 'History',
+      //     ),
+      //
+      //   ],
+      // ),
     );
   }
 }

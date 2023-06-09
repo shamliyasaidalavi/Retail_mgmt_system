@@ -1,5 +1,10 @@
 
 import 'package:flutter/material.dart';
+import 'package:quantity_input/quantity_input.dart';
+
+import 'package:trip/User/paymet.dart';
+
+import 'placeorder.dart';
 
 class Cart extends StatefulWidget {
   const Cart({Key? key}) : super(key: key);
@@ -13,6 +18,8 @@ final List<String> containerImages = [
 'images/two.jpg',
 'images/three.jpg',
 ];
+
+int simpleIntInput=1;
 final List<String> imageTitles = ["Rice", "Meat", "vegetables", "fruits"];
 final List<String> Titles = ["Rs100-2items", "Rs512.10-1item", "Rs50-4item", "Rs60.20-3item"];
 
@@ -45,7 +52,7 @@ class _CartState extends State<Cart> {
           crossAxisAlignment: CrossAxisAlignment.start,
             children: [
 
-         Text("My Cart",
+         Text("My cart",
             style: TextStyle(fontWeight: FontWeight.w400, fontSize: 40)),
  ListView.separated(
    shrinkWrap: true,
@@ -84,72 +91,30 @@ class _CartState extends State<Cart> {
                                         ),
                                     Text("${Titles[index]}"
                                     ),
+
                                   ],
                                 ),
+                                QuantityInput(
+                                    value: simpleIntInput,
+                                    onChanged: (value) => setState(() => simpleIntInput = int.parse(value.replaceAll(',', '')))
+                                ),
+
                                 Row(
                                   children: [
-                                    Icon(Icons.edit,color: Colors.blue,),
-                                    Text("Edit",style: TextStyle(color: Colors.blue),)
+                                    Icon(Icons.delete,color: Colors.blue,),
+
                                   ],
                                 ),
 
-                              ]),
+                              ]
+                          ),
                         ),
 
                       ),
                     );
                   },
                 ),
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 16.0),
-                child: Card(
-                  color: Colors.grey.withOpacity(0.8),
-                  elevation: 0,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    side: BorderSide(color: Colors.grey.withOpacity(0.8), width: 5),
-                  ),
 
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Center(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children:[
-                          Center(
-                            child: Text(
-                              "Repeat Previous Order",
-                              style: TextStyle(
-                                fontSize: 16.0,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                          SizedBox(height: 4.0),
-                      Container(
-                        height: 50,
-                        margin: EdgeInsets.symmetric(horizontal: 40),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: Colors.white),
-                        child: Center(
-                            child:  Text(
-                              "Order Now",
-                              style: TextStyle(
-                                  color: Colors.grey[900],
-                                  fontWeight: FontWeight.bold),
-                            )),
-                      ),
-                      SizedBox(
-                        height: 30,)
-
-
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ),
               Container(
                 height: 200,
                 padding: const EdgeInsets.only(top: 15, left: 15, right: 15),
@@ -192,36 +157,28 @@ class _CartState extends State<Cart> {
                   ],
                 ),
               ),
-              Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: (BorderRadius.circular(15))
-                    ),
-                      width: double.infinity,
-                      child: Padding(
-                        padding: const EdgeInsets.all(30),
-                        child: ElevatedButton(
-                          child: Padding(
-                            padding: const EdgeInsets.all(10),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Column(
-                                  children: [
-                                    Text("Total Amout"),
-                                    Text('\u{20B9} 10,019',
-                                        style: TextStyle(fontSize: 20,  color: Colors.white,)),
-                                  ],
-                                ),
-                                Text("Pay now"),
-                              ],
-                            ),
-                          ),
-                          onPressed: () {},
+    Align(
+    alignment: Alignment.bottomCenter,
+    child: Container(
+    decoration: BoxDecoration(
+    borderRadius: (BorderRadius.circular(15))
+    ),
+    width: double.infinity,
+    child: Padding(
+    padding: const EdgeInsets.all(30),
+    child: ElevatedButton(
+    child: Padding(
+    padding: const EdgeInsets.all(10),
+    child: Text("Place Order"),
+    ),
+    onPressed: () {
+    Navigator.push(
+    context,
+    MaterialPageRoute(builder: (context) =>  placeorder()),
+    );
+    },
 
-                        ),
-                      ))),
+    ),),),)
             ],
         ),
       ),

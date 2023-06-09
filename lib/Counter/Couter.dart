@@ -1,18 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:trip/loginpage.dart';
 
-class Counter extends StatefulWidget {
-  const Counter({Key? key}) : super(key: key);
+import 'addoffers.dart';
+import 'paymentstatus.dart';
+import 'todaysale.dart';
+
+class Couter1 extends StatefulWidget {
+  const Couter1({Key? key}) : super(key: key);
 
   @override
-  State<Counter> createState() => _CounterState();
+  State<Couter1> createState() => _Couter1State();
 }
 
-class _CounterState extends State<Counter> {
+class _Couter1State extends State<Couter1> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(onPressed: (){},icon : Icon(Icons.menu),color: Colors.green,),
+        leading: IconButton(onPressed: (){
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => Login()),
+          );
+        },icon : Icon(Icons.menu),color: Colors.green,),
         title: Center(
           child: Text(
             "Counter",style: TextStyle(color: Colors.blueGrey),
@@ -51,72 +61,114 @@ class _CounterState extends State<Counter> {
                 ),
 
                 Padding(
-                  padding: const EdgeInsets.only(left: 20,right: 20),
-                  child: Container(
-                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(15),color: Colors.grey[200]),
-                    height: 90,
-                    width: double.infinity,
+                  padding: const EdgeInsets.only( top:20,left: 20,right: 20),
+                  child: GestureDetector(
+                    onTap: (){
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => addoffers()),
+                      );
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(15),color: Colors.grey[200]),
+                      height: 90,
+                      width: double.infinity,
 
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
 
-                        Text(" Add offers",
-                          style: TextStyle(
-                              fontSize: 20
+                          Text(" Add offers",
+                            style: TextStyle(
+                                fontSize: 20
+                            ),
                           ),
-                        ),
-                        Icon(Icons.arrow_forward_ios_sharp),
+                          Icon(Icons.arrow_forward_ios_sharp),
 
-                      ],
+                        ],
+                      ),
+
                     ),
-
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 20,left: 20,right: 20),
-                  child: Container(
-                    height: 100,
-                    width: double.infinity,
-                    color: Colors.grey[200],
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
+                  child: GestureDetector(
+                    onTap: (){
 
-                        Text("Today sales ",
-                          style: TextStyle(
-                              fontSize: 20
-                          ),
+    Navigator.push(
+    context,
+    MaterialPageRoute(builder: (context) => todaysales()),
+    );
+                    },
+                    child: GestureDetector(
+                      onTap: (){
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => todaysales()),
+                        );
+
+                      }
+                      ,
+                      child: Container(
+                        height: 100,
+                        width: double.infinity,
+                        decoration: BoxDecoration(borderRadius: BorderRadius.circular(15),color: Colors.grey[200]),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text("Today sales ",
+                                style: TextStyle(
+                                    fontSize: 20
+                                ),
+                              ),
+                            ),
+                            Icon(Icons.arrow_forward_ios_sharp),
+
+                          ],
                         ),
-                        Icon(Icons.arrow_forward_ios_sharp),
 
-                      ],
+
+                      ),
                     ),
-
-
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 20,left: 20,right: 20),
-                  child: Container(
-                    height: 100,
-                    width: double.infinity,
-                    color: Colors.grey[200],
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
+                  child: GestureDetector(
+                    onTap: (){
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => paymentstatus()),
+                      );
+                    },
+                    child: Container(
+                      height: 100,
+                      width: double.infinity,
 
-                        Text("payment status ",
-                          style: TextStyle(
-                              fontSize: 20
+                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(15),color: Colors.grey[200]),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text("payment status ",
+                              style: TextStyle(
+                                  fontSize: 20
+                              ),
+                            ),
                           ),
-                        ),
-                        Icon(Icons.arrow_forward_ios_sharp),
+                          Icon(Icons.arrow_forward_ios_sharp),
 
-                      ],
+                        ],
+                      ),
+
+
                     ),
-
-
                   ),
                 ),
 

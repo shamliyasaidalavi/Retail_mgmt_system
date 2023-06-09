@@ -1,49 +1,45 @@
 import 'package:flutter/material.dart';
 
-import 'offersaddofrs.dart';
+import 'admoredtls.dart';
 
-class addoffers extends StatefulWidget {
-  const addoffers({Key? key}) : super(key: key);
+class Admisalesreport extends StatefulWidget {
+  const Admisalesreport({Key? key}) : super(key: key);
 
   @override
-  State<addoffers> createState() => _addoffersState();
+  State<Admisalesreport> createState() => _AdmisalesreportState();
 }
 
-class _addoffersState extends State<addoffers> {
+class _AdmisalesreportState extends State<Admisalesreport> {
   final List<String> containerImages = [
     'images/two.jpg',
     'images/three.jpg',
     'images/two.jpg',
     'images/three.jpg',
   ];
-  final List<String> imageTitles = ["Tommato", "Onion", "carrot", "chilli"];
-
+  final List<String> imageTitles = ["12-5-2023", "12-5-2023", "12-5-2023", "12-5-2023"];
+  final List<String> Titles = ["35465767", "354645", "35465767", "35465767"];
+  final List<String> Titless = ["9", "5", "3", "2"];
   bool _isExpanded=false;
   // This controller will store the value of the search bar
   final TextEditingController _searchController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        // Overide the default Back button
         automaticallyImplyLeading: false,
         leadingWidth: 100,
         leading: ElevatedButton.icon(
           onPressed: () => Navigator.of(context).pop(),
-          icon: const Icon(Icons.arrow_left_sharp, color: Colors.black,),
-          label: const Text('Back', style: TextStyle(color: Colors.green)),
+          icon: const Icon(Icons.arrow_back_sharp, color: Colors.black),
+          label: const Text('Back', style: TextStyle(color: Colors.black)),
           style: ElevatedButton.styleFrom(
-
-            backgroundColor: Colors.transparent,
+            primary: Colors.transparent,
             elevation: 0,
           ),
-
         ),
         backgroundColor: Colors.transparent,
         elevation: 0,
-        // other stuff
-
-
       ),
       body: SingleChildScrollView(
         child: Align(
@@ -51,7 +47,7 @@ class _addoffersState extends State<addoffers> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("Offers",
+              Text("Sales Report",
                   style: TextStyle(fontWeight: FontWeight.w400, fontSize: 40)),
               Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -62,7 +58,7 @@ class _addoffersState extends State<addoffers> {
                   child: TextField(
                     controller: _searchController,
                     decoration: InputDecoration(
-                      hintText: 'Search product',
+                      hintText: 'Search order by date',
                       // Add a clear button to the search bar
                       suffixIcon: IconButton(
                         icon: Icon(Icons.clear),
@@ -115,24 +111,29 @@ class _addoffersState extends State<addoffers> {
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(" ${imageTitles[index]}",style:TextStyle(fontSize: 20.0)
+                                  Text("Date : ${imageTitles[index]}"
                                   ),
-
+                                  Text("Order id : ${Titles[index]}"
+                                  ),
+                                  Text("items : ${Titless[index]}"
+                                  ),
                                 ],
                               ),
 
 
-                              Center(child: TextButton(onPressed:(){setState(() {
-                                _isExpanded=!_isExpanded;
-                              });
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) => Addoffers()),
-                              );
-
-                              }, child:
-
-                              Text("Add offers",style:TextStyle(fontSize: 18.0) ,))),
+                              Center(child: TextButton(onPressed:(){
+                                setState(() {
+                                  _isExpanded=!_isExpanded;
+                                });
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => adsalesdtls()),
+                                );
+                              }, child: Column(
+                                children: [
+                                 Icon(Icons.arrow_forward_ios_outlined,color: Colors.black,),
+                                ],
+                              ))),
 
 
 

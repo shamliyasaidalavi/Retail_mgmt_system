@@ -80,9 +80,10 @@ class _RetailState extends State<Retail> {
                           )
                       ),
                       child:Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: <Widget>[
-                          Text("Free Delivery For Next 3 Orders", style: TextStyle(color: Colors.white, fontSize: 35, fontWeight: FontWeight.bold),),
+                          Center(child: Text("Free Delivery For Next 3 Orders", style: TextStyle(color: Colors.white, fontSize: 35, fontWeight: FontWeight.bold),)),
                           SizedBox(height: 30,),
                           Container(
                             height: 50,
@@ -174,36 +175,36 @@ class _RetailState extends State<Retail> {
           ),
           )
         ),
-
-        bottomNavigationBar: BottomNavigationBar(
-        selectedItemColor: Colors.blue,
-        unselectedItemColor: Colors.black,
-        type: BottomNavigationBarType.shifting,
-        currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.store),
-            label: 'store',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.trolley),
-            label: 'cart',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: 'settings',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'profile',
-          ),
-        ],
-      ),
+      //
+      //   bottomNavigationBar: BottomNavigationBar(
+      //   selectedItemColor: Colors.blue,
+      //   unselectedItemColor: Colors.black,
+      //   type: BottomNavigationBarType.shifting,
+      //   currentIndex: _selectedIndex,
+      //   onTap: _onItemTapped,
+      //   items: const <BottomNavigationBarItem>[
+      //     BottomNavigationBarItem(
+      //       icon: Icon(Icons.home),
+      //       label: 'home',
+      //     ),
+      //     BottomNavigationBarItem(
+      //       icon: Icon(Icons.store),
+      //       label: 'store',
+      //     ),
+      //     BottomNavigationBarItem(
+      //       icon: Icon(Icons.trolley),
+      //       label: 'cart',
+      //     ),
+      //     BottomNavigationBarItem(
+      //       icon: Icon(Icons.settings),
+      //       label: 'settings',
+      //     ),
+      //     BottomNavigationBarItem(
+      //       icon: Icon(Icons.person),
+      //       label: 'profile',
+      //     ),
+      //   ],
+      // ),
 
           );
         }
