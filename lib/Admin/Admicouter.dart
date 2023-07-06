@@ -1,5 +1,7 @@
 
 import 'package:flutter/material.dart';
+import 'package:trip/Admin/model/usermodel.dart';
+import 'package:trip/Api/api_sevices.dart';
 
 import 'cuterdetails.dart';
 
@@ -10,9 +12,11 @@ class Admictr extends StatelessWidget {
     'images/rest.png',
     'images/rest.png',
   ];
-  final List<String> entries1 = ['shamli ', 'vicy'];
+  List _loadprooducts = [];
+  ApiService client = ApiService();
+  final List<String> entries1 = ['Counter1', 'Counter2'];
   final List<String> userIds = ['001', '002'];
-  final List<String> entries = ['vishnu', 'lis', 'Gen', 'raj'];
+  final List<String> entries = ['Counter3', 'Counter5', 'Counter4', 'Counter1'];
   final List<String> userIds2 = ['007', '008','009','003'];
 
   @override
@@ -44,61 +48,70 @@ class Admictr extends StatelessWidget {
           ),
           GestureDetector(
             onTap: (){Navigator.push(context, MaterialPageRoute(builder: (context)=>ctrdetails()));},
-            child: ListView.separated(
-              shrinkWrap: true,
-              padding: const EdgeInsets.all(8),
-              itemCount: entries1.length,
-              itemBuilder: (BuildContext context, int index) {
-                return ListTile(
-                  leading: CircleAvatar(
-                    backgroundImage: AssetImage(containerImages[index]),
-                  ),
-                  title: Text(
-                    entries1[index],
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      fontStyle: FontStyle.italic,
-                    ),
-                  ),
-                  subtitle: Text(
-                    'ID: ${userIds[index]}',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 14,
-                    ),
-                  ),
-                  trailing: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      IconButton(
-                        icon: Icon(
-                          Icons.check,
-                          color: Colors.green,
-                        ),
-                        onPressed: () {
-                          // Handle approve button pressed
-                          _approveUser(index);
-                        },
-                      ),
-                      IconButton(
-                        icon: Icon(
-                          Icons.close,
-                          color: Colors.red,
-                        ),
-                        onPressed: () {
-                          // Handle decline button pressed
-                          _declineUser(index);
-                        },
-                      ),
+            child: FutureBuilder<List<UserModel>>(
+    future: client.fetchuser(),
+    builder: (BuildContext context,
+    AsyncSnapshot<List<UserModel>> snapshot) {
+    if (snapshot.hasData) {
+    return ListView.separated(
+    shrinkWrap: true,
+    padding: const EdgeInsets.all(8),
+    itemCount: snapshot.data!.length,
+    itemBuilder: (BuildContext context, int index) {
+    return ListTile(
+    leading: CircleAvatar(
+    backgroundImage: AssetImage(containerImages[index]),
+    ),
+    title: Text(
+    entries1[index],
+    style: TextStyle(
+    color: Colors.black,
+    fontSize: 16,
+    fontWeight: FontWeight.bold,
+    fontStyle: FontStyle.italic,
+    ),
+    ),
+    subtitle: Text(
+    "Counterid:${(snapshot.data![index].id)}",
+    style: TextStyle(
+    color: Colors.black,
+    fontSize: 14,
+    ),
+    ),
+    trailing: Row(
+    mainAxisSize: MainAxisSize.min,
+    children: [
+    IconButton(
+    icon: Icon(
+    Icons.check,
+    color: Colors.green,
+    ),
+    onPressed: () {
+    // Handle approve button pressed
+    _approveUser(index);
+    },
+    ),
+    IconButton(
+    icon: Icon(
+    Icons.close,
+    color: Colors.red,
+    ),
+    onPressed: () {
+    // Handle decline button pressed
+    _declineUser(index);
+    },
+    ),
 
-                    ],
-                  ),
-                  tileColor: Colors.grey.withOpacity(0.4),
-                );
-              }, separatorBuilder: (BuildContext context, int index) =>
-            const Divider(),
+    ],
+    ),
+    tileColor: Colors.grey.withOpacity(0.4),
+    );
+    }, separatorBuilder: (BuildContext context, int index) =>
+    const Divider(),
+    );
+    }
+    return Center(child: CircularProgressIndicator());
+    }
             ),
           ),
 
@@ -108,7 +121,7 @@ class Admictr extends StatelessWidget {
             color: Colors.black,
           ),
           Text(
-            'All User',
+            'All Counters',
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 19),
           ),
 

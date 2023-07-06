@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:trip/loginpage.dart';
-import 'package:trip/registration.dart';
+import 'package:trip/Register/registration.dart';
+
+import 'Register/Allregister.dart';
 
 class Welcome extends StatefulWidget {
   const Welcome({Key? key}) : super(key: key);
@@ -62,7 +64,7 @@ class _WelcomeState extends State<Welcome> {
               ),
               child: Text('Sign up'),
               onPressed: () {
-                Navigator.push(context,MaterialPageRoute(builder:(context)=>signup()));
+                Navigator.push(context,MaterialPageRoute(builder:(context)=>Signup1 ()));
               },
             ),
           ),

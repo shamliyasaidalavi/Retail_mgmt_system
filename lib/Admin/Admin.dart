@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 
+import 'AdGodwn.dart';
+import 'AdmDel.dart';
+import 'Admicouter.dart';
 import '../Adpay.dart';
 import '../Salesreport.dart';
+import 'cuterdetails.dart';
 import '../product/prdt.dart';
 import 'Manageuser.dart';
 
@@ -75,7 +79,7 @@ class _AdminState extends State<Admin> {
                 ),
                 Divider(),
                 Padding(
-                  padding: const EdgeInsets.all(20.0),
+                  padding: const EdgeInsets.all(10.0),
                   child: GestureDetector(
                     onTap: () {
                       Navigator.push(
@@ -102,7 +106,7 @@ class _AdminState extends State<Admin> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(20.0),
+                  padding: const EdgeInsets.all(10.0),
                   child: Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(15),
@@ -111,17 +115,24 @@ class _AdminState extends State<Admin> {
                     height: 100,
                     width: double.infinity,
                     child: Center(
-                      child: Text(
-                        "Manage Counter",
-                        style: TextStyle(
-                          fontSize: 20,
+                      child: GestureDetector(onTap: (){
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => Admictr()),
+                        );
+                      },
+                        child: Text(
+                          "Manage Counter",
+                          style: TextStyle(
+                            fontSize: 20,
+                          ),
                         ),
                       ),
                     ),
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(20.0),
+                  padding: const EdgeInsets.all(10.0),
                   child: Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(15),
@@ -148,7 +159,7 @@ class _AdminState extends State<Admin> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(20.0),
+                  padding: const EdgeInsets.all(10.0),
                   child: Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(15),
@@ -157,17 +168,50 @@ class _AdminState extends State<Admin> {
                     height: 100,
                     width: double.infinity,
                     child: Center(
-                      child: Text(
-                        "Manage Godown",
-                        style: TextStyle(
-                          fontSize: 20,
+                      child: GestureDetector(onTap: (){
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => Adgodwn()),
+                        );
+                      },
+                        child: Text(
+                          "Manage Godown",
+                          style: TextStyle(
+                            fontSize: 20,
+                          ),
                         ),
                       ),
                     ),
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(20.0),
+                  padding: const EdgeInsets.all(10.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
+                      color: Colors.grey[200],
+                    ),
+                    height: 100,
+                    width: double.infinity,
+                    child: Center(
+                      child: GestureDetector(onTap: (){
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => AdmDel()),
+                        );
+                      },
+                        child: Text(
+                          "Manage Deliveryboy",
+                          style: TextStyle(
+                            fontSize: 20,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
                   child: Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(15),
@@ -193,7 +237,7 @@ class _AdminState extends State<Admin> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(20.0),
+                  padding: const EdgeInsets.all(10.0),
                   child: Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(15),

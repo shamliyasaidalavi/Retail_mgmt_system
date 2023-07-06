@@ -16,31 +16,25 @@ class _OpenorderState extends State<Openorder> {
     'images/three.jpg',
   ];
   final List<String> imageTitles = ["Customer name:shamli", "Customer name:shamli", "Customer name:shamli", "Customer name:shamli"];
-  final List<String> Titles = ["Address:mangattil (H)kott kallingal tirur", "Address:mangattil (H)kott kallingal tirur", "Address:mangattil (H)kott kallingal tirur", "Address:"];
+  final List<String> Titles = ["Address:mangattil (H) tirur", "Address:mangattil (H) tirur", "Address:mangattil (H) tirur", "Address:"];
   final List<String> Titless = ["Phone nmr:9895780059", "Phone nmr:9895780059", "Phone nmr:9895780059", "Phoe nmr:9895780059"];
    bool _isExpanded=false;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(appBar: AppBar(
-      // Overide the default Back button
+    return Scaffold( appBar: AppBar(
       automaticallyImplyLeading: false,
       leadingWidth: 100,
       leading: ElevatedButton.icon(
         onPressed: () => Navigator.of(context).pop(),
-        icon: const Icon(Icons.arrow_left_sharp,color: Colors.black,),
-        label: const Text('Back',style: TextStyle(color:Colors.green )),
+        icon: const Icon(Icons.arrow_back_sharp, color: Colors.black),
+        label: const Text('Back', style: TextStyle(color: Colors.black)),
         style: ElevatedButton.styleFrom(
-
-          backgroundColor: Colors.transparent,
+          primary: Colors.transparent,
           elevation: 0,
         ),
-
       ),
       backgroundColor: Colors.transparent,
       elevation: 0,
-      // other stuff
-
-
     ),
     body: SingleChildScrollView(
     child: Align(
@@ -55,7 +49,7 @@ class _OpenorderState extends State<Openorder> {
       shrinkWrap: true,
       separatorBuilder: (context, index) {
       return SizedBox(
-      width: 20,
+      width: 10,
       );
       },
       //   scrollDirection: Axis.vertical,

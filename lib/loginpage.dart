@@ -1,11 +1,18 @@
+import 'dart:convert';
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:trip/Admin/Admin.dart';
 import 'package:trip/Counter/Couter.dart';
 import 'package:trip/Godown/godown.dart';
 import 'package:trip/User/homepage2.dart';
 import 'package:trip/User/mainscreen.dart';
 import 'package:trip/delivery/M%20delivery.dart';
-import 'package:trip/registration.dart';
+import 'package:trip/Register/registration.dart';
+
+import 'Api/api.dart';
 
 class Login extends StatefulWidget {
   const  Login({Key? key}) : super(key: key);
@@ -15,12 +22,97 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State< Login> {
+  bool _isLoading = false;
+  String admin = "0";
+  String user = "1";
+  String counter = "2";
+  String godown = "3";
+  String delivery = '4';
+  String storedvalue = '1';
+  final TextEditingController userController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  late String role;
+  late String status;
+  late SharedPreferences localStorage;
+  _pressLoginButton() async {
+    setState(() {
+      _isLoading = true;
+    });
+
+ 
+    var data = {
+      'username': userController.text.trim(), //username for email
+      'password': passwordController.text.trim()
+    };
+    var res = await Api().authData(data,'/login/login');
+    var body = json.decode(res.body);
+
+    if (body['success'] == true) {
+      print(body);
+
+      role = json.encode(body['details']['role']);
+      status = json.encode(body['details']['status']);
+
+      localStorage = await SharedPreferences.getInstance();
+      localStorage.setString('role', role.toString());
+      localStorage.setString('login_id', json.encode(body['login_id']));
+
+      print('login_idss ${json.encode(body['login_id'])}');
+
+      if (admin == role.replaceAll('"', '') &&
+          storedvalue == status.replaceAll('"', '')) {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => Admin()));
+      }
+      else if (user == role.replaceAll('"', '') &&
+          storedvalue == status.replaceAll('"', '')) {
+        Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => Homepage1(),
+        ));
+
+
+      }
+      else if ( counter== role.replaceAll('"', '') &&
+          storedvalue == status.replaceAll('"', '')) {
+        Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => Couter1(),
+        ));
+
+
+      }
+      else if (godown == role.replaceAll('"', '') &&
+          storedvalue == status.replaceAll('"', '')) {
+        Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) =>godownhome(),
+        ));
+
+
+      }
+      else if (delivery == role.replaceAll('"', '') &&
+          storedvalue == status.replaceAll('"', '')) {
+        Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => Deliveryguy(),
+        ));
+
+
+      }
+      else {
+        Fluttertoast.showToast(
+          msg: "Please wait for admin approval",
+          backgroundColor: Colors.grey,
+        );
+      }
+
+
+    } else {
+      Fluttertoast.showToast(
+        msg: body['message'].toString(),
+        backgroundColor: Colors.grey,
+      );
+    }
+  }
   @override
-  String user="user";
-  String Counter="Counter";
-  String Godown="Godown";
-  String delivery="delivery";
-  TextEditingController passcontroller=TextEditingController();
+
   Widget build(BuildContext context) {
     return Scaffold(
       body:
@@ -64,6 +156,7 @@ class _LoginState extends State< Login> {
               Padding(
                 padding: const EdgeInsets.only(left: 100.0,right: 100.0, bottom:50),
                 child: TextField(
+                  controller:userController,
                   decoration: InputDecoration(
                       labelStyle: TextStyle(
                           color: Colors.lightBlueAccent
@@ -81,7 +174,7 @@ class _LoginState extends State< Login> {
               Padding(
                 padding: const EdgeInsets.only(left: 100.0,right: 100.0, bottom:50),
                 child: TextField(
-                  controller: passcontroller,
+                  controller: passwordController,
                   decoration: InputDecoration(
                       labelStyle: TextStyle(
                           color: Colors.lightBlueAccent
@@ -104,21 +197,7 @@ class _LoginState extends State< Login> {
                         primary: Colors.lightBlueAccent, // Background color
                       ),
                       onPressed: (){
-                    if(passcontroller.text== user){
-                      Navigator.push(context,MaterialPageRoute(builder:(context)=>mainscreen()));
-                      }
-                    else if(passcontroller.text == Godown){
-                      Navigator.push(context,MaterialPageRoute(builder:(context)=>godown()));
-
-                    }
-                    else if(passcontroller.text == delivery){
-                      Navigator.push(context,MaterialPageRoute(builder:(context)=>Deliveryguy()));
-
-                    }
-                    else if(passcontroller.text == Counter){
-                      Navigator.push(context,MaterialPageRoute(builder:(context)=>Couter1 ()));
-
-                    }
+                        _pressLoginButton();
                   }, child: Text("login"))
               ),
               Padding(

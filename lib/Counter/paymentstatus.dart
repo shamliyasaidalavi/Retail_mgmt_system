@@ -36,25 +36,19 @@ class _paymentstatusState extends State<paymentstatus> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        // Overide the default Back button
         automaticallyImplyLeading: false,
         leadingWidth: 100,
         leading: ElevatedButton.icon(
           onPressed: () => Navigator.of(context).pop(),
-          icon: const Icon(Icons.arrow_left_sharp, color: Colors.black,),
-          label: const Text('Back', style: TextStyle(color: Colors.green)),
+          icon: const Icon(Icons.arrow_back_sharp, color: Colors.black),
+          label: const Text('Back', style: TextStyle(color: Colors.black)),
           style: ElevatedButton.styleFrom(
-
-            backgroundColor: Colors.transparent,
+            primary: Colors.transparent,
             elevation: 0,
           ),
-
         ),
         backgroundColor: Colors.transparent,
         elevation: 0,
-        // other stuff
-
-
       ),
       body: SingleChildScrollView(
         child: Column(

@@ -18,6 +18,10 @@ class _admpaymtState extends State<admpaymt> {
   final List<String> Billnumber= ["232445", "556", "4345", "45667"];
   final List<String> Userid = ["3445", "45466", "34590", "123489"];
   final List<String> Username = ["sudhee", "shamli", "vicy", "Aju"];
+  final List<String> Amount = ["4567", "90800", "7869", "91054"];
+  final List<String> Amounttype = ["OnlinePay", "Cash", "Card", "Cash"];
+  final List<String> Date = ["On 07 May", "On 08 april", "On 09 May", "On 02 june"];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -108,22 +112,41 @@ class _admpaymtState extends State<admpaymt> {
                               ],
                             ),
                             Spacer(),
-                            IconButton(
-                              icon: Icon(Icons.edit),
-                              color: Colors.grey[600],
-                              onPressed: () {
-
-                              },
+                        Column(
+                          children: [
+                            Text(Amount[index],
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                              ),
+                            ),
+                            Text(Amounttype[index],
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: Colors.grey[600],
+                              ),
+                            ),
+                            Text(Date[index],
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: Colors.grey[600],
+                              ),
                             ),
                           ],
                         ),
+                          ],
+                        ),
+
                       ),
                     ),
                   ),
                 );
+
               },
+
             ),
           ],
+
         ),
       ),
     );

@@ -26,61 +26,89 @@ class _PrdteditState extends State<Prdtedit> {
         backgroundColor: Colors.transparent,
         elevation: 0,
       ),
-      body: Column(
-        children: [
-          Container(
-            padding: const EdgeInsets.all(20),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                CircleAvatar(
-                  radius: 40,
-                  backgroundImage: AssetImage("images/one.jpg"),
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Product Name:',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 16,
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      'Product ID:',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 16,
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      'Product Quantity:',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 16,
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-          Align(
-            alignment: Alignment.centerLeft,
-            child: Padding(
-              padding: const EdgeInsets.only(left: 20.0),
-              child: Text(
-                'Product Description:',
-                style: TextStyle(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 16,
-                ),
-              ),
-            ),
-          ),
+    body: Padding(
+    padding: const EdgeInsets.all(16.0),
+    child: Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+    Image.asset(
+    'images/two.jpg',
+    height: 200,
+    fit: BoxFit.cover,
+    ),
+    Padding(
+    padding: const EdgeInsets.all(8.0),
+    child: Container(
+    // Add padding around the search bar
+    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+    // Use a Material design search bar
+    child: TextField(
+    decoration: InputDecoration(
+    filled: true,
+    fillColor: Colors.white,
+    border:OutlineInputBorder(
+    borderRadius: BorderRadius.circular(15),
+    ),
+    labelText: 'product name',
+    ),
+    ),
+    ),
+    ),
+    Padding(
+    padding: const EdgeInsets.all(8.0),
+    child: Container(
+    // Add padding around the search bar
+    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+    // Use a Material design search bar
+    child: TextField(
+    decoration: InputDecoration(
+    filled: true,
+    fillColor: Colors.white,
+    border:OutlineInputBorder(
+    borderRadius: BorderRadius.circular(15),
+    ),
+    labelText: 'product id',
+    ),
+    ),
+    ),
+    ),
+    Padding(
+    padding: const EdgeInsets.all(8.0),
+    child: Container(
+    // Add padding around the search bar
+    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+    // Use a Material design search bar
+    child: TextField(
+    decoration: InputDecoration(
+    filled: true,
+    fillColor: Colors.white,
+    border:OutlineInputBorder(
+    borderRadius: BorderRadius.circular(15),
+    ),
+    labelText: 'product quantity',
+    ),
+    ),
+    ),
+    ),
+    Padding(
+    padding: const EdgeInsets.all(8.0),
+    child: Container(
+    // Add padding around the search bar
+    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+    // Use a Material design search bar
+    child: TextField(
+    decoration: InputDecoration(
+    filled: true,
+    fillColor: Colors.white,
+    border:OutlineInputBorder(
+    borderRadius: BorderRadius.circular(15),
+    ),
+    labelText: 'product Description',
+    ),
+    ),
+    ),
+    ),
+
           const Spacer(), // Added to push buttons to the bottom
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -126,6 +154,7 @@ class _PrdteditState extends State<Prdtedit> {
           const SizedBox(height: 16), // Added for spacing
         ],
       ),
+    ),
     );
   }
 }

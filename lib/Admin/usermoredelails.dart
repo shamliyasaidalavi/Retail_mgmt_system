@@ -1,4 +1,8 @@
+
+import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:flutter/material.dart';
+
+import 'Manageuser.dart';
 
 class More extends StatefulWidget {
   const More({Key? key}) : super(key: key);
@@ -9,14 +13,14 @@ class More extends StatefulWidget {
 
 class _MoreState extends State<More> {
   final List<String> containerImages = [
-    'images/two.jpg',
-    'images/three.jpg',
-    'images/two.jpg',
-    'images/three.jpg',
+    'images/60111.jpg',
+    'images/60111.jpg',
+    'images/60111.jpg',
+    'images/60111.jpg',
   ];
 
-  final List<String> username = ["shamli"];
-  final List<String> userid = ["233"];
+  final List<String> Name = ["shamli"];
+  final List<String> Userid = ["233"];
   final List<String> Gender = ["Female"];
   final List<String> phonenumber = ["9895780059"];
   final List<String> Address = ["magattil house"];
@@ -30,10 +34,10 @@ class _MoreState extends State<More> {
         leadingWidth: 100,
         leading: ElevatedButton.icon(
           onPressed: () => Navigator.of(context).pop(),
-          icon: const Icon(Icons.arrow_left_sharp, color: Colors.black),
-          label: const Text('Back', style: TextStyle(color: Colors.green)),
+          icon: const Icon(Icons.arrow_back_sharp, color: Colors.black),
+          label: const Text('Back', style: TextStyle(color: Colors.black)),
           style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.transparent,
+            primary: Colors.transparent,
             elevation: 0,
           ),
         ),
@@ -42,69 +46,149 @@ class _MoreState extends State<More> {
       ),
       body: SingleChildScrollView(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              "",
-              style: TextStyle(fontWeight: FontWeight.w400, fontSize: 40),
-            ),
+
             ListView.separated(
               shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
               separatorBuilder: (context, index) {
                 return SizedBox(
-                  width: 20,
+                  height: 10,
                 );
               },
-              itemCount: username.length,
+              itemCount: 1,
               itemBuilder: (context, index) {
                 return Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
                   child: Card(
-                    child: Padding(
-                      padding: const EdgeInsets.all(10),
-                      child: Row(
-                        children: [
-                          Column(
-                            children: [
-                              CircleAvatar(
-                                backgroundImage: AssetImage('images/profile.jpg'),
+                    elevation: 2,
+                    child: InkWell(
+                      onTap: () {
+
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Container(
+                              width: 80,
+                              height: 80,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                image: DecorationImage(
+                                  image: AssetImage(containerImages[index]),
+                                  fit: BoxFit.cover,
+                                ),
                               ),
-                              Text(" ${username[index]}"),
-                              Text(" ${phonenumber[index]}"),
-                              Text(" ${Address[index]}"),
-                              Text(" ${Email[index]}"),
-                              Text(" ${Password[index]}"),
-                              Text(" ${Gender[index]}"),
-                            ],
-                          ),
-                          Spacer(),
-                          IconButton(
-                            onPressed: () {
-                              // Delete button action
-                            },
-                            icon: Icon(
-                              Icons.delete,
-                              color: Colors.blue,
                             ),
-                          ),
-                          IconButton(
-                            onPressed: () {
-                              // Edit button action
-                            },
-                            icon: Icon(
-                              Icons.edit,
-                              color: Colors.blue,
+                            SizedBox(width: 20),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Name:${(Name[index])}",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                                SizedBox(height: 4),
+                                Text(
+                                  "Userid:${(Userid[index])}",
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    color: Colors.grey[600],
+                                  ),
+                                ),
+                SizedBox(height: 4),
+                Text(
+                "Gender:${(Gender[index])}",
+                style: TextStyle(
+                fontSize: 14,
+                color: Colors.grey[600],
+                ),
+                ),
+                SizedBox(height: 4),
+                Text(
+                "phonenumber:${(phonenumber[index])}",
+                style: TextStyle(
+                fontSize: 14,
+                color: Colors.grey[600],
+                ),
+                ),
+                SizedBox(height: 4),
+                Text(
+                "Email:${(Email[index])}",
+                style: TextStyle(
+                fontSize: 14,
+                color: Colors.grey[600],
+                ),
+                ),
+                SizedBox(height: 4),
+                Text(
+                "Address:${(Address[index])}",
+                style: TextStyle(
+                fontSize: 14,
+                color: Colors.grey[600],
+                ),
+                ),
+                SizedBox(height: 4),
+                Text(
+                "Password:${(Password[index])}",
+                style: TextStyle(
+                fontSize: 14,
+                color: Colors.grey[600],
+                ),
+                ),
+                              ],
                             ),
-                          ),
-                        ],
+                            Spacer(),
+                            IconButton(
+                              icon: Icon(Icons.edit),
+                              color: Colors.grey[600],
+                              onPressed: () {
+                }
+
+                                ),
+                            Spacer(),
+                            IconButton(
+                                icon: Icon(Icons.delete),
+                                color: Colors.grey[600],
+                                onPressed: () {  Alert(
+                                  context: context,
+                                  title: "Are You sure To Delete",
+                                  content:  Icon(Icons.delete),
+                                  buttons: [
+                                    DialogButton(
+                                      child: Text(
+                                        "OK",
+                                        style: TextStyle(color: Colors.white, fontSize: 20),
+                                      ),
+                                      onPressed: () => Navigator.push(context, MaterialPageRoute(builder:(context)=>Manageuser ())),
+                                      color: Color.fromRGBO(0, 179, 134, 1.0),
+                                      radius: BorderRadius.circular(0.0),
+                                    ),
+                                  ],
+
+                                ).show();
+
+                                }
+
+                            ),
+        ]
+        )
+      )
+    )
+    )
+    );
+              }
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                  ),
-                );
-              },
-            ),
-          ],
-        ),
-      ),
+
     );
   }
 }

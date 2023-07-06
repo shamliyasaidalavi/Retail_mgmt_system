@@ -14,12 +14,12 @@ class _cancelledorderState extends State<cancelledorder> {
     'images/two.jpg',
     'images/three.jpg',
   ];
-  final List<String> imageTitles = ["Customer name:shamli", "Customer name:shamli", "Customer name:shamli", "Customer name:shamli"];
-  final List<String> Titles = ["Address:mangattil (H)kott kallingal tirur", "Address:mangattil (H)kott kallingal tirur", "Address:mangattil (H)kott kallingal tirur", "Address:"];
+  final List<String> imageTitles = ["Customername:shamli", "Customername:shamli", "Customername:shamli", "Customername:shamli"];
+  final List<String> Titles = ["Address:mangattil (H)tirur", "Address:mangattil (H)tirur", "Address:mangattil (H)tirur", "Address:"];
   final List<String> Titless = ["Phone nmr:9895780059", "Phone nmr:9895780059", "Phone nmr:9895780059", "Phoe nmr:9895780059"];
-  final List<String> order_num = ["order numer: 8461529648", "order numer: 8461529648", "order numer: 8461529648", "order numer: 8461529648"];
-  final List<String> cancelld_time= ["cancelld time: 8.00 pm", "cancelldtime: 8.00 pm", "cancelld time: 8.00 pm", "cancelld time: 8.00 pm"];
-  final List<String> cancelld_by= ["Delivery Boy", "User", "User", "User"];
+  final List<String> order_num = ["order no: 84615", "order no: 8468", "order no: 84648", "order no: 829648"];
+  final List<String> cancelld_time= ["cancelld time:8.00", "cancelldtime:8.00", "cancelld time:8.00", "cancelld time:8.00"];
+  final List<String> cancelld_by= ["DelBoy", "User", "User", "User"];
 
   @override
   Widget build(BuildContext context) {

@@ -28,7 +28,7 @@ class _PrdtState extends State<Prdt> {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => PrdtDtls()),
+            MaterialPageRoute(builder: (context) =>  PrdtDtls()),
           );
         },
         child: Icon(Icons.add),

@@ -15,35 +15,29 @@ class _closedorderState extends State<closedorder > {
     'images/three.jpg',
   ];
   final List<String> imageTitles = ["Customer name:shamli", "Customer name:shamli", "Customer name:shamli", "Customer name:shamli"];
-  final List<String> Titles = ["Address:mangattil (H)kott kallingal tirur", "Address:mangattil (H)kott kallingal tirur", "Address:mangattil (H)kott kallingal tirur", "Address:"];
+  final List<String> Titles = ["Address:mangattil(H)tirur", "Address:mangattil(H)tirur", "Address:mangattil(H)tirur", "Address:"];
   final List<String> Titless = ["Phone nmr:9895780059", "Phone nmr:9895780059", "Phone nmr:9895780059", "Phoe nmr:9895780059"];
-  final List<String> order_num = ["order numer: 8461529648", "order numer: 8461529648", "order numer: 8461529648", "order numer: 8461529648"];
-  final List<String> closed_time= ["closed time: 8.00 pm", "closed time: 8.00 pm", "closed time: 8.00 pm", "closed time: 8.00 pm"];
+  final List<String> order_num = ["orderno: 846152", "orderno: 8461", "orderno: 84615", "orderno: 84615"];
+  final List<String> closed_time= ["closed time: 8.00", "closed time: 8.00", "closed time: 8.00", "closed time: 8.00"];
 
   bool _isExpanded=false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        // Overide the default Back button
         automaticallyImplyLeading: false,
         leadingWidth: 100,
         leading: ElevatedButton.icon(
           onPressed: () => Navigator.of(context).pop(),
-          icon: const Icon(Icons.arrow_left_sharp,color: Colors.black,),
-          label: const Text('Back',style: TextStyle(color:Colors.green )),
+          icon: const Icon(Icons.arrow_back_sharp, color: Colors.black),
+          label: const Text('Back', style: TextStyle(color: Colors.black)),
           style: ElevatedButton.styleFrom(
-
-            backgroundColor: Colors.transparent,
+            primary: Colors.transparent,
             elevation: 0,
           ),
-
         ),
         backgroundColor: Colors.transparent,
         elevation: 0,
-        // other stuff
-
-
       ),
         body: SingleChildScrollView(
           child: Align(
