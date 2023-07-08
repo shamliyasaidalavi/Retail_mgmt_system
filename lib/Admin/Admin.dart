@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:trip/Admin/maagecategory.dart';
 
 import 'AdGodwn.dart';
 import 'AdmDel.dart';
@@ -202,6 +203,32 @@ class _AdminState extends State<Admin> {
                       },
                         child: Text(
                           "Manage Deliveryboy",
+                          style: TextStyle(
+                            fontSize: 20,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
+                      color: Colors.grey[200],
+                    ),
+                    height: 100,
+                    width: double.infinity,
+                    child: Center(
+                      child: GestureDetector(onTap: (){
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) =>category1()),
+                        );
+                      },
+                        child: Text(
+                          "Add category",
                           style: TextStyle(
                             fontSize: 20,
                           ),

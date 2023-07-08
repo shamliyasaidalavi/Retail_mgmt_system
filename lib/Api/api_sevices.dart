@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:trip/Admin/model/categoryModel.dart';
 import 'package:trip/Admin/model/coutermodel.dart';
 import 'package:trip/Admin/model/deliveryModel.dart';
 import 'package:trip/Admin/model/godowModel.dart';
@@ -144,5 +145,18 @@ class ApiService {
       return products;
     }
   }
+  Future<List<categoryModel>> fetchcategory() async {
+    var response = await Api().getData('/category/view');
+    if (response.statusCode == 200) {
+      var items = json.decode(response.body);
+      print((items));
 
+      List<categoryModel> products = List<categoryModel>.from(
+          items['data'].map((e) => categoryModel.fromJson(e)).toList());
+      return products;
+    } else {
+      List<categoryModel> products = [];
+      return products;
+    }
+  }
 }
