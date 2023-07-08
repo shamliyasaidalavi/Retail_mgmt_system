@@ -1,6 +1,11 @@
 
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:trip/Admin/model/coutermodel.dart';
 import 'package:trip/Admin/model/usermodel.dart';
+import 'package:trip/Api/api.dart';
 import 'package:trip/Api/api_sevices.dart';
 
 import 'cuterdetails.dart';
@@ -14,6 +19,23 @@ class Admictr extends StatelessWidget {
   ];
   List _loadprooducts = [];
   ApiService client = ApiService();
+  Future approveUser(String counterid) async {
+    print("u ${counterid}");
+    var response = await Api().getData('/register/approve/'+counterid);
+    if (response.statusCode == 200) {
+      var items = json.decode(response.body);
+      print("approve status${items}");
+      Fluttertoast.showToast(
+        msg: "Approved",
+      );
+    } else {
+      Fluttertoast.showToast(
+        msg: "Error",
+      );
+    }
+  }
+  late String counterid;
+
   final List<String> entries1 = ['Counter1', 'Counter2'];
   final List<String> userIds = ['001', '002'];
   final List<String> entries = ['Counter3', 'Counter5', 'Counter4', 'Counter1'];
@@ -48,22 +70,25 @@ class Admictr extends StatelessWidget {
           ),
           GestureDetector(
             onTap: (){Navigator.push(context, MaterialPageRoute(builder: (context)=>ctrdetails()));},
-            child: FutureBuilder<List<UserModel>>(
-    future: client.fetchuser(),
+            child: FutureBuilder<List<couterModel>>(
+    future: client.fetchtcounter(),
     builder: (BuildContext context,
-    AsyncSnapshot<List<UserModel>> snapshot) {
+    AsyncSnapshot<List<couterModel>> snapshot) {
     if (snapshot.hasData) {
     return ListView.separated(
     shrinkWrap: true,
     padding: const EdgeInsets.all(8),
     itemCount: snapshot.data!.length,
     itemBuilder: (BuildContext context, int index) {
+      counterid=snapshot.data![index].id;
+      print(counterid);
+
     return ListTile(
     leading: CircleAvatar(
     backgroundImage: AssetImage(containerImages[index]),
     ),
-    title: Text(
-    entries1[index],
+    title: Text(snapshot.data![index].countername
+  ,
     style: TextStyle(
     color: Colors.black,
     fontSize: 16,
@@ -88,7 +113,7 @@ class Admictr extends StatelessWidget {
     ),
     onPressed: () {
     // Handle approve button pressed
-    _approveUser(index);
+    approveUser(counterid);
     },
     ),
     IconButton(
@@ -125,47 +150,56 @@ class Admictr extends StatelessWidget {
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 19),
           ),
 
-          ListView.separated(
-            shrinkWrap: true,
+         FutureBuilder<List<couterModel>>(
+        future: client.fetchtcounter(),
+    builder: (BuildContext context,
+    AsyncSnapshot<List<couterModel>> snapshot) {
+      if (snapshot.hasData) {
+        return ListView.separated(
+          shrinkWrap: true,
 
-            padding: const EdgeInsets.all(8),
-            itemCount: entries.length,
-            itemBuilder: (BuildContext context, int index) {
-              return ListTile(
-                leading: CircleAvatar(
-                  backgroundImage: AssetImage(containerImages[index]),
+          padding: const EdgeInsets.all(8),
+          itemCount: snapshot.data!.length,
+          itemBuilder: (BuildContext context, int index) {
+            return ListTile(
+              leading: CircleAvatar(
+                backgroundImage: AssetImage(containerImages[index]),
+              ),
+              title: Text(
+                snapshot.data![index].countername,
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  fontStyle: FontStyle.italic,
                 ),
-                title: Text(
-                  entries[index],
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    fontStyle: FontStyle.italic,
-                  ),
+              ),
+              subtitle: Text(
+                'ID: ${(snapshot.data![index].id)}',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 14,
                 ),
-                subtitle: Text(
-                  'ID: ${userIds2[index]}',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 14,
-                  ),
+              ),
+              trailing: IconButton(
+                icon: Icon(
+                  Icons.delete,
+                  color: Colors.red,
                 ),
-                trailing: IconButton(
-                  icon: Icon(
-                    Icons.delete,
-                    color: Colors.red,
-                  ),
-                  onPressed: () {
-                    // Handle delete button pressed
-                    _showDeleteConfirmationDialog(context, index);
-                  },
-                ),
-                tileColor: Colors.grey.withOpacity(0.4),
-              );
-            },
-            separatorBuilder: (BuildContext context, int index) =>
-            const Divider(),
+                onPressed: () {
+                  // Handle delete button pressed
+                  _showDeleteConfirmationDialog(context, index);
+                },
+              ),
+              tileColor: Colors.grey.withOpacity(0.4),
+            );
+          },
+          separatorBuilder: (BuildContext context, int index) =>
+          const Divider(),
+        );
+      }
+      return Center(child: CircularProgressIndicator());
+    }
           ),
 
         ],
@@ -216,11 +250,7 @@ class Admictr extends StatelessWidget {
     containerImages.removeAt(index);
   }
 
-  void _approveUser(int index) {
-    // Perform the approve operation here
-    // For example, update the user status in the database
-    print('User ${entries[index]} approved.');
-  }
+
 
   void _declineUser(int index) {
     // Perform the decline operation here

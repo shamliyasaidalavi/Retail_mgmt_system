@@ -1,42 +1,33 @@
 import 'package:flutter/material.dart';
-import 'package:trip/Admin/model/productmodel.dart';
-import 'package:trip/Admin/model/usermodel.dart';
+import 'package:trip/Admin/model/paymentModel.dart';
 import 'package:trip/Api/api_sevices.dart';
-import 'package:trip/product/editprdt.dart';
-import 'prdtdetails.dart';
 
-class Prdt extends StatefulWidget {
-  const Prdt({Key? key}) : super(key: key);
+class admpaymt extends StatefulWidget {
+  const admpaymt({Key? key}) : super(key: key);
 
   @override
-  State<Prdt> createState() => _PrdtState();
+  State<admpaymt> createState() => _admpaymtState();
 }
 
-class _PrdtState extends State<Prdt> {
+class _admpaymtState extends State<admpaymt> {
   final List<String> containerImages = [
-    'images/two.jpg',
-    'images/three.jpg',
-    'images/two.jpg',
-    'images/three.jpg',
+    'images/60111.jpg',
+    'images/60111.jpg',
+    'images/60111.jpg',
+    'images/60111.jpg',
   ];
   List _loadprooducts = [];
   ApiService client = ApiService();
-  final List<String> product_name = ["jaya", "Chicken", "onion", "Mango"];
-  final List<String> quantity = ["2kg", "5kg", "4kg", "3kg"];
-  final List<String> category = ["Rice", "Meat", "vegetable", "fruit"];
+  final List<String> Billnumber= ["232445", "556", "4345", "45667"];
+  final List<String> id = ["3445", "45466", "34590", "123489"];
+  final List<String> Username = ["sudhee", "shamli", "vicy", "Aju"];
+  final List<String> Amount = ["4567", "90800", "7869", "91054"];
+  final List<String> Amounttype = ["OnlinePay", "Cash", "Card", "Cash"];
+  final List<String> Date = ["On 07 May", "On 08 april", "On 09 May", "On 02 june"];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) =>  PrdtDtls()),
-          );
-        },
-        child: Icon(Icons.add),
-      ),
       appBar: AppBar(
         automaticallyImplyLeading: false,
         leadingWidth: 100,
@@ -59,14 +50,14 @@ class _PrdtState extends State<Prdt> {
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Text(
-                "Products",
+                "Payment",
                 style: TextStyle(fontWeight: FontWeight.w400, fontSize: 40),
               ),
             ),
-            FutureBuilder<List< productModel>>(
-            future: client.fetchproduct(),
+            FutureBuilder<List< paymentModel>>(
+        future: client.fetchpayment(),
     builder: (BuildContext context,
-    AsyncSnapshot<List< productModel>> snapshot) {
+    AsyncSnapshot<List<  paymentModel>> snapshot) {
       if (snapshot.hasData) {
         return ListView.separated(
           shrinkWrap: true,
@@ -83,12 +74,8 @@ class _PrdtState extends State<Prdt> {
               child: Card(
                 elevation: 2,
                 child: InkWell(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => Prdtedit()),
-                    );
-                  },
+
+
                   child: Padding(
                     padding: const EdgeInsets.all(10),
                     child: Row(
@@ -109,24 +96,21 @@ class _PrdtState extends State<Prdt> {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                             " Name:${(snapshot.data![index].productname)}",
+                            Text("bill_number: ${snapshot.data![index].Billnumber}",
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 16,
                               ),
                             ),
                             SizedBox(height: 4),
-                            Text(
-                              " quantity:${(snapshot.data![index].quantity)}",
+                            Text("user_id:${snapshot.data![index].id}",
                               style: TextStyle(
                                 fontSize: 14,
                                 color: Colors.grey[600],
                               ),
                             ),
                             SizedBox(height: 4),
-                            Text(
-                              " category:${(snapshot.data![index].category)}",
+                            Text("user_name:${snapshot.data![index].Username}",
                               style: TextStyle(
                                 fontSize: 14,
                                 color: Colors.grey[600],
@@ -135,30 +119,45 @@ class _PrdtState extends State<Prdt> {
                           ],
                         ),
                         Spacer(),
-                        IconButton(
-                          icon: Icon(Icons.edit),
-                          color: Colors.grey[600],
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => Prdtedit()),
-                            );
-                          },
+                        Column(
+                          children: [
+                            Text("price:${snapshot.data![index].Amount}",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                              ),
+                            ),
+                            Text("Amounttype:${snapshot.data![index].Amounttype}",
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: Colors.grey[600],
+                              ),
+                            ),
+                            Text("Date:${snapshot.data![index].Date}",
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: Colors.grey[600],
+                              ),
+                            ),
+                          ],
                         ),
                       ],
                     ),
+
                   ),
                 ),
               ),
             );
           },
+
         );
+
     }
       return Center(child: CircularProgressIndicator());
     }
             ),
           ],
+
         ),
       ),
     );

@@ -35,7 +35,7 @@ class _PrdtDtlsState extends State<PrdtDtls> {
     };
     var res = await Api().authData(data,'/product/product');
     var body = json.decode(res.body);
-
+    print(body);
     if (body['success'] == true) {
       print(body);
       Fluttertoast.showToast(

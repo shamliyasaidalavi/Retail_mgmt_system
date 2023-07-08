@@ -1,27 +1,45 @@
+
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:trip/Admin/model/godowModel.dart';
 import 'package:trip/Admin/model/usermodel.dart';
-import 'package:trip/Admin/usermoredelails.dart';
+import 'package:trip/Api/api.dart';
 import 'package:trip/Api/api_sevices.dart';
 
+import 'cuterdetails.dart';
 
-class Manageuser extends StatefulWidget {
-  const Manageuser({Key? key}) : super(key: key);
-
-  @override
-  State<Manageuser> createState() => _ManageuserState();
-}
-
-class _ManageuserState extends State<Manageuser> {
+class Manageuser extends StatelessWidget {
   final List<String> containerImages = [
-    'images/60111.jpg',
-    'images/60111.jpg',
-    'images/60111.jpg',
-    'images/60111.jpg',
+    'images/rest.png',
+    'images/rest.png',
+    'images/rest.png',
+    'images/rest.png',
   ];
   List _loadprooducts = [];
   ApiService client = ApiService();
-  final List<String> Name = ["Shamli", "Vincy", "sudhee", "vishu"];
-  final List<String> Userid = ["3455", "5768", "478", "342"];
+  Future approveUser(String godwnid) async {
+    print("u ${godwnid}");
+    var response = await Api().getData('/register/approve/'+godwnid);
+    if (response.statusCode == 200) {
+      var items = json.decode(response.body);
+      print("approve status${items}");
+      Fluttertoast.showToast(
+        msg: "Approved",
+      );
+    } else {
+      Fluttertoast.showToast(
+        msg: "Error",
+      );
+    }
+  }
+  late String godwnid;
+
+  final List<String> entries1 = ['Counter1', 'Counter2'];
+  final List<String> userIds = ['001', '002'];
+  final List<String> entries = ['Counter3', 'Counter5', 'Counter4', 'Counter1'];
+  final List<String> userIds2 = ['007', '008','009','003'];
 
   @override
   Widget build(BuildContext context) {
@@ -31,116 +49,210 @@ class _ManageuserState extends State<Manageuser> {
         leadingWidth: 100,
         leading: ElevatedButton.icon(
           onPressed: () => Navigator.of(context).pop(),
-          icon: const Icon(Icons.arrow_back_sharp, color: Colors.black),
-          label: const Text('Back', style: TextStyle(color: Colors.black)),
+          icon: const Icon(Icons.arrow_left_sharp, color: Colors.black),
+          label: const Text(
+            'Back',
+            style: TextStyle(color: Colors.black),
+          ),
           style: ElevatedButton.styleFrom(
-            primary: Colors.transparent,
+            backgroundColor: Colors.transparent,
             elevation: 0,
           ),
         ),
         backgroundColor: Colors.transparent,
         elevation: 0,
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Text(
-                "Users",
-                style: TextStyle(fontWeight: FontWeight.w400, fontSize: 40),
-              ),
+      body: Column(
+        children: [
+          Text(
+            'Request',
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 19),
+          ),
+          GestureDetector(
+            onTap: (){Navigator.push(context, MaterialPageRoute(builder: (context)=>ctrdetails()));},
+            child: FutureBuilder<List<UserModel>>(
+                future: client.fetchuser(),
+                builder: (BuildContext context,
+                    AsyncSnapshot<List<UserModel>> snapshot) {
+                  if (snapshot.hasData) {
+                    return ListView.separated(
+                      shrinkWrap: true,
+                      padding: const EdgeInsets.all(8),
+                      itemCount: snapshot.data!.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        godwnid=snapshot.data![index].logid;
+                        print(godwnid);
+
+                        return ListTile(
+                          leading: CircleAvatar(
+                            backgroundImage: AssetImage(containerImages[index]),
+                          ),
+                          title: Text(
+                            snapshot.data![index].fname,
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              fontStyle: FontStyle.italic,
+                            ),
+                          ),
+                          subtitle: Text(
+                            "Counterid:${(snapshot.data![index].id)}",
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 14,
+                            ),
+                          ),
+                          trailing: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              IconButton(
+                                icon: Icon(
+                                  Icons.check,
+                                  color: Colors.green,
+                                ),
+                                onPressed: () {
+                                  // Handle approve button pressed
+                                  approveUser(godwnid);
+                                },
+                              ),
+                              IconButton(
+                                icon: Icon(
+                                  Icons.close,
+                                  color: Colors.red,
+                                ),
+                                onPressed: () {
+                                  // Handle decline button pressed
+                                  _declineUser(index);
+                                },
+                              ),
+
+                            ],
+                          ),
+                          tileColor: Colors.grey.withOpacity(0.4),
+                        );
+                      }, separatorBuilder: (BuildContext context, int index) =>
+                    const Divider(),
+                    );
+                  }
+                  return Center(child: CircularProgressIndicator());
+                }
             ),
+          ),
 
 
-        FutureBuilder<List<UserModel>>(
-        future: client.fetchuser(),
-    builder: (BuildContext context,
-    AsyncSnapshot<List<UserModel>> snapshot) {
-      if (snapshot.hasData) {
-        return ListView.separated(
-          shrinkWrap: true,
-          physics: NeverScrollableScrollPhysics(),
-          separatorBuilder: (context, index) {
-            return SizedBox(
-              height: 10,
-            );
-          },
-          itemCount: snapshot.data!.length,
-          itemBuilder: (context, index) {
-            return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: Card(
-                elevation: 2,
-                child: Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        width: 80,
-                        height: 80,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          image: DecorationImage(
-                            image: AssetImage(containerImages[index]),
-                            fit: BoxFit.cover,
+          Divider(
+            thickness: 2,
+            color: Colors.black,
+          ),
+          Text(
+            'All Users',
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 19),
+          ),
+          FutureBuilder<List<UserModel>>(
+              future: client.fetchuserap(),
+              builder: (BuildContext context,
+                  AsyncSnapshot<List<UserModel>> snapshot) {
+                if (snapshot.hasData) {
+                  return ListView.separated(
+                    shrinkWrap: true,
+
+                    padding: const EdgeInsets.all(8),
+                    itemCount: snapshot.data!.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return ListTile(
+                        leading: CircleAvatar(
+                          backgroundImage: AssetImage(containerImages[index]),
+                        ),
+                        title: Text(
+                          snapshot.data![index].fname,
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            fontStyle: FontStyle.italic,
                           ),
                         ),
-                      ),
-                      SizedBox(width: 20),
-                      Expanded( // Wrap the Card widget with an Expanded widget
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "Name:${(snapshot.data![index].fname)}",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
-                              ),
-                            ),
-                            SizedBox(height: 4),
-                            Text(
-                              "Userid:${(snapshot.data![index].id)}",
-                              style: TextStyle(
-                                fontSize: 14,
-                                color: Colors.grey[600],
-                              ),
-                            ),
-                          ],
+                        subtitle: Text(
+                          'ID: ${snapshot.data![index].logid}',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 14,
+                          ),
                         ),
-                      ),
-                      Spacer(),
-                      IconButton(
-                        icon: Icon(Icons.arrow_forward_ios_outlined),
-                        color: Colors.grey[600],
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => More()),
-                          );
-                        },
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            );
-          },
-        );
+                        trailing: IconButton(
+                          icon: Icon(
+                            Icons.delete,
+                            color: Colors.red,
+                          ),
+                          onPressed: () {
+                            // Handle delete button pressed
+                            _showDeleteConfirmationDialog(context, index);
+                          },
+                        ),
+                        tileColor: Colors.grey.withOpacity(0.4),
+                      );
+                    },
+                    separatorBuilder: (BuildContext context, int index) =>
+                    const Divider(),
+                  );
+                } return Center(child: CircularProgressIndicator());
+              }
+          ),
 
-      }
-      return Center(child: CircularProgressIndicator());
-    } ),
-
-
-
-
-          ],
-        ),
+        ],
       ),
     );
+  }
+
+  void _showDeleteConfirmationDialog(
+      BuildContext context, int index) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: true,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Delete User'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: const <Widget>[
+                Text('Are you sure you want to delete this user?'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Cancel'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: const Text('Delete'),
+              onPressed: () {
+                // Perform delete operation
+                _deleteUser(index);
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _deleteUser(int index) {
+    // Perform the actual delete operation here
+    // You can remove the user from the 'entries' list or call any delete API
+    entries.removeAt(index);
+    containerImages.removeAt(index);
+  }
+
+
+
+  void _declineUser(int index) {
+    // Perform the decline operation here
+    // For example, delete the user from the database
+    print('User ${entries[index]} declined.');
   }
 }

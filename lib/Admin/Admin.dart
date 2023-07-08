@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'AdGodwn.dart';
 import 'AdmDel.dart';
 import 'Admicouter.dart';
-import '../Adpay.dart';
+import 'Adpay.dart';
 import '../Salesreport.dart';
 import 'cuterdetails.dart';
 import '../product/prdt.dart';

@@ -67,7 +67,7 @@ class _LoginState extends State< Login> {
       else if (user == role.replaceAll('"', '') &&
           storedvalue == status.replaceAll('"', '')) {
         Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => Homepage1(),
+          builder: (context) => mainscreen(),
         ));
 
 

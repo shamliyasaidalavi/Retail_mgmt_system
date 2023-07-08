@@ -176,35 +176,35 @@ class _RetailState extends State<Retail> {
           )
         ),
       //
-      //   bottomNavigationBar: BottomNavigationBar(
-      //   selectedItemColor: Colors.blue,
-      //   unselectedItemColor: Colors.black,
-      //   type: BottomNavigationBarType.shifting,
-      //   currentIndex: _selectedIndex,
-      //   onTap: _onItemTapped,
-      //   items: const <BottomNavigationBarItem>[
-      //     BottomNavigationBarItem(
-      //       icon: Icon(Icons.home),
-      //       label: 'home',
-      //     ),
-      //     BottomNavigationBarItem(
-      //       icon: Icon(Icons.store),
-      //       label: 'store',
-      //     ),
-      //     BottomNavigationBarItem(
-      //       icon: Icon(Icons.trolley),
-      //       label: 'cart',
-      //     ),
-      //     BottomNavigationBarItem(
-      //       icon: Icon(Icons.settings),
-      //       label: 'settings',
-      //     ),
-      //     BottomNavigationBarItem(
-      //       icon: Icon(Icons.person),
-      //       label: 'profile',
-      //     ),
-      //   ],
-      // ),
+       bottomNavigationBar: BottomNavigationBar(
+         selectedItemColor: Colors.blue,
+        unselectedItemColor: Colors.black,
+         type: BottomNavigationBarType.shifting,
+         currentIndex: _selectedIndex,
+         onTap: _onItemTapped,
+         items: const <BottomNavigationBarItem>[
+           BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'home',
+           ),
+           BottomNavigationBarItem(
+            icon: Icon(Icons.store),
+            label: 'store',
+           ),
+           BottomNavigationBarItem(
+             icon: Icon(Icons.trolley),
+             label: 'cart',
+           ),
+           BottomNavigationBarItem(
+            icon: Icon(Icons.settings),
+            label: 'settings',
+          ),
+           BottomNavigationBarItem(
+             icon: Icon(Icons.person),
+            label: 'profile',
+          ),
+        ],
+       ),
 
           );
         }

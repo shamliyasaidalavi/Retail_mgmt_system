@@ -3,6 +3,11 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:trip/Admin/model/coutermodel.dart';
+import 'package:trip/Admin/model/deliveryModel.dart';
+import 'package:trip/Admin/model/godowModel.dart';
+import 'package:trip/Admin/model/paymentModel.dart';
+import 'package:trip/Admin/model/productmodel.dart';
 import 'package:trip/Admin/model/usermodel.dart';
 import 'package:trip/Api/api.dart';
 
@@ -12,9 +17,23 @@ class ApiService {
 
   Future<List<UserModel>> fetchuser() async {
     var response = await Api().getData('/register/view-users');
-    if (response.statusCode == 200) {
-      var items = json.decode(response.body);
-      print((items));
+      if (response.statusCode == 200) {
+        var items = json.decode(response.body);
+        print((items));
+
+      List<UserModel> products = List<UserModel>.from(
+          items['data'].map((e) => UserModel.fromJson(e)).toList());
+      return products;
+    } else {
+      List<UserModel> products = [];
+      return products;
+    }
+  }
+  Future<List<UserModel>> fetchuserap() async {
+    var response = await Api().getData('/register/view-usersaproov');
+      if (response.statusCode == 200) {
+        var items = json.decode(response.body);
+        print((items));
 
       List<UserModel> products = List<UserModel>.from(
           items['data'].map((e) => UserModel.fromJson(e)).toList());
@@ -25,48 +44,105 @@ class ApiService {
     }
   }
 
-  Future<List<UserModel>> fetchtcounter() async {
+  Future<List<couterModel>> fetchtcounter() async {
     var response = await Api().getData('/register/view-counter');
     if (response.statusCode == 200) {
       var items = json.decode(response.body);
       print((items));
 
-      List<UserModel> products = List<UserModel>.from(
-          items['data'].map((e) => UserModel.fromJson(e)).toList());
+      List<couterModel> products = List<couterModel>.from(
+          items['data'].map((e) => couterModel.fromJson(e)).toList());
       return products;
     } else {
-      List<UserModel> products = [];
+      List<couterModel> products = [];
+      return products;
+    }
+  }Future<List<couterModel>> fetchtcounterap() async {
+    var response = await Api().getData('/register/view-counteraproov');
+    if (response.statusCode == 200) {
+      var items = json.decode(response.body);
+      print((items));
+
+      List<couterModel> products = List<couterModel>.from(
+          items['data'].map((e) => couterModel.fromJson(e)).toList());
+      return products;
+    } else {
+      List<couterModel> products = [];
       return products;
     }
   }
 
-  Future<List<UserModel>> fetchgodown() async {
+  Future<List<godowModel>> fetchgodown() async {
     var response = await Api().getData('/register/view-godown');
     if (response.statusCode == 200) {
       var items = json.decode(response.body);
       print((items));
 
-      List<UserModel> products = List<UserModel>.from(
-          items['data'].map((e) => UserModel.fromJson(e)).toList());
+      List<godowModel> products = List<godowModel>.from(
+          items['data'].map((e) => godowModel.fromJson(e)).toList());
       return products;
     } else {
-      List<UserModel> products = [];
+      List<godowModel> products = [];
+      return products;
+    }
+  }
+  Future<List<godowModel>> fetchgodownap() async {
+    var response = await Api().getData('/register/view-godownaproov');
+    if (response.statusCode == 200) {
+      var items = json.decode(response.body);
+      print((items));
+
+      List<godowModel> products = List<godowModel>.from(
+          items['data'].map((e) => godowModel.fromJson(e)).toList());
+      return products;
+    } else {
+      List<godowModel> products = [];
       return products;
     }
   }
 
-  Future<List<UserModel>> fetchdelivery() async {
+
+  Future<List<deliveryModel>> fetchdelivery() async {
     var response = await Api().getData('/register/view-delivery');
     if (response.statusCode == 200) {
       var items = json.decode(response.body);
       print((items));
 
-      List<UserModel> products = List<UserModel>.from(
-          items['data'].map((e) => UserModel.fromJson(e)).toList());
+      List<deliveryModel> products = List<deliveryModel>.from(
+          items['data'].map((e) => deliveryModel.fromJson(e)).toList());
       return products;
     } else {
-      List<UserModel> products = [];
+      List<deliveryModel> products = [];
       return products;
     }
   }
+  Future<List<productModel>> fetchproduct() async {
+    var response = await Api().getData('/product/view-product');
+    if (response.statusCode == 200) {
+      var items = json.decode(response.body);
+      print((items));
+
+      List<productModel> products = List<productModel>.from(
+          items['data'].map((e) => productModel.fromJson(e)).toList());
+      return products;
+    } else {
+      List<productModel> products = [];
+      return products;
+    }
+  }
+  Future<List<paymentModel>> fetchpayment() async {
+    var response = await Api().getData('/product/view');
+    if (response.statusCode == 200) {
+      var items = json.decode(response.body);
+      print((items));
+
+      List<paymentModel> products = List<paymentModel>.from(
+          items['data'].map((e) => paymentModel.fromJson(e)).toList());
+      return products;
+    } else {
+      List<paymentModel> products = [];
+      return products;
+    }
+  }
+
 }

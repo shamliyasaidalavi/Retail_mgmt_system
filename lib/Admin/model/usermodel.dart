@@ -1,14 +1,19 @@
 class UserModel{
   final String fname;
+  final String lid;
   final String id;
   final String lname;
-  final String countername;
+  final String logid;
+
+//  final String countername;
 
 
   UserModel({required this.fname,
     required this.id,
     required this.lname,
-    required this.countername,
+    required this.lid,
+    required this.logid,
+   // required this.countername,
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
@@ -16,7 +21,9 @@ class UserModel{
         id: json['_id'],
         fname: json['first_name'],
         lname: json['last_name'],
-countername: json['counter_name']
+        lid: json['id'],
+      logid: json['logid'],
+    //  countername: json['counter_name']
         );
     }
 }

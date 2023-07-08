@@ -48,82 +48,82 @@ class _AdmDelState extends State<AdmDel> {
           children: [
 
             FutureBuilder<List<UserModel>>(
-    future: client.fetchuser(),
-    builder: (BuildContext context,
-    AsyncSnapshot<List<UserModel>> snapshot) {
-      if (snapshot.hasData) {
-        return ListView.separated(
-          shrinkWrap: true,
-          physics: NeverScrollableScrollPhysics(),
-          separatorBuilder: (context, index) {
-            return SizedBox(
-              height: 10,
-            );
-          },
-          itemCount: snapshot.data!.length,
-          itemBuilder: (context, index) {
-            return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: Card(
-                elevation: 2,
-                child: InkWell(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => Deldetails()),
-                    );
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Container(
-                          width: 80,
-                          height: 80,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            image: DecorationImage(
-                              image: AssetImage(containerImages[index]),
-                              fit: BoxFit.cover,
+                future: client.fetchuser(),
+                builder: (BuildContext context,
+                    AsyncSnapshot<List<UserModel>> snapshot) {
+                  if (snapshot.hasData) {
+                    return ListView.separated(
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      separatorBuilder: (context, index) {
+                        return SizedBox(
+                          height: 10,
+                        );
+                      },
+                      itemCount: snapshot.data!.length,
+                      itemBuilder: (context, index) {
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                          child: Card(
+                            elevation: 2,
+                            child: InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => Deldetails()),
+                                );
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.all(10),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Container(
+                                      width: 80,
+                                      height: 80,
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        image: DecorationImage(
+                                          image: AssetImage(containerImages[index]),
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(width: 20),
+                                    Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            "name:${(snapshot.data![index].fname)}",
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 16,
+                                            ),
+                                          ),
+                                          SizedBox(height: 4),
+                                          Text(
+                                            "id:${(snapshot.data![index].id)}",
+                                            style: TextStyle(
+                                              fontSize: 14,
+                                              color: Colors.grey[600],
+                                            ),
+                                          ),
+                                          SizedBox(height: 4),
+                                        ]
+                                    ),
+
+                                  ],
+                                ),
+                              ),
                             ),
                           ),
-                        ),
-                        SizedBox(width: 20),
-                        Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "name:${(snapshot.data![index].fname)}",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 16,
-                                ),
-                              ),
-                              SizedBox(height: 4),
-                              Text(
-                                "id:${(snapshot.data![index].id)}",
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  color: Colors.grey[600],
-                                ),
-                              ),
-                              SizedBox(height: 4),
-                            ]
-                        ),
+                        );
+                      },
+                    );
 
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            );
-          },
-        );
-
-    }
-      return Center(child: CircularProgressIndicator());
-    }
+                  }
+                  return Center(child: CircularProgressIndicator());
+                }
             ),
           ],
         ),
