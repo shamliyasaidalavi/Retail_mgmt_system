@@ -1,13 +1,26 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
-
+import 'package:path/path.dart';
+import 'package:trip/Admin/maagecategory.dart';
+import 'package:trip/Api/api.dart';
+import 'package:trip/Api/api_sevices.dart';
+import 'package:http/http.dart' as http;
 class addcategory extends StatefulWidget {
+
+  List _loadprooducts = [];
+  ApiService client = ApiService();
   @override
   _addcategoryState createState() => _addcategoryState();
 }
 
 class _addcategoryState extends State<addcategory> {
+
+  late final _filename;
+  File? imageFile;
+  late String storedImage;
   File? _image;
   final picker = ImagePicker();
   TextEditingController _textEditingController = TextEditingController();
@@ -19,6 +32,8 @@ class _addcategoryState extends State<addcategory> {
     setState(() {
       if (pickedFile != null) {
         _image = File(pickedFile.path);
+        _filename = basename(_image!.path).toString();
+
       } else {
         print('No image selected.');
       }
@@ -37,12 +52,84 @@ class _addcategoryState extends State<addcategory> {
       // Add your code to handle form submission here
     }
   }
+  void addCateg()async {
 
+    var data = {
+      "category_name": _textEditingController.text,
+      "category_image":_filename,
+    };
+    print(data);
+    var res = await Api().authData(data, '/category/category');
+    var body = json.decode(res.body);
+    print("image ${body}");
+
+    if(body['success']==true)
+    {
+      print(body);
+      addComplaintImage();
+      Fluttertoast.showToast(
+        msg: body['message'].toString(),
+        backgroundColor: Colors.grey,
+      );
+      Navigator.push(
+        this.context, //add this so it uses the context of the class
+        MaterialPageRoute(
+          builder: (context) => category1(),
+        ), //MaterialpageRoute
+      );
+
+    }
+    else
+    {
+      Fluttertoast.showToast(
+        msg: body['message'].toString(),
+        backgroundColor: Colors.grey,
+      );
+
+    }
+  }
+  void addComplaintImage()async{
+
+    final uri = Uri.parse(Api().url+'/category/upload');
+    final request = http.MultipartRequest('POST', uri);
+    final imageStream = http.ByteStream(_image!.openRead());
+    final imageLength = await _image!.length();
+
+    final multipartFile = http.MultipartFile(
+      'file',
+      imageStream,
+      imageLength,
+      filename: _filename,
+    );
+    request.files.add(multipartFile);
+
+    print("multipart${multipartFile}");
+    final response = await request.send();
+    if(response.statusCode == 200)
+    {
+
+      Fluttertoast.showToast(
+        msg:"success",
+        backgroundColor: Colors.grey,
+      );
+
+
+    }
+    else
+    {
+      Fluttertoast.showToast(
+        msg:"Failed",
+        backgroundColor: Colors.grey,
+      );
+
+    }
+
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('TextField and Image Picker'),
+        title: Text('categories'),
       ),
       body: Form(
         key: _formKey,
@@ -70,7 +157,7 @@ class _addcategoryState extends State<addcategory> {
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(15),
                       ),
-                      labelText: 'Product Name',
+                      labelText: 'category Name',
                     ),
                   ),
                 ),
@@ -89,7 +176,7 @@ class _addcategoryState extends State<addcategory> {
               ),
               Center(
                 child: ElevatedButton(
-                  onPressed: _submitForm,
+                  onPressed: addCateg,
                   child: Text('Submit'),
                 ),
               ),

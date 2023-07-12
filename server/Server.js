@@ -16,6 +16,8 @@ const paymentRouter = require('./src/routes/paymentRouter');
 const categoryRouter = require('./src/routes/categoryRouter');
 
 const app = express()
+
+app.use(express.static('./public'));
 app.use(express.urlencoded({ extended: true }));
 
 app.get('/', function (req, res) {

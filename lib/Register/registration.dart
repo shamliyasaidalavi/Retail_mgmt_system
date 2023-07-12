@@ -190,8 +190,7 @@ class _usersignupState extends State<usersignup> {
                 ),
               ),
               Padding(
-                padding:
-                const EdgeInsets.only(left: 100.0, right: 100.0, bottom: 20),
+                padding: const EdgeInsets.only(left: 100.0, right: 100.0, bottom: 20),
                 child: TextFormField(
                   controller: _phoneNumberController,
                   decoration: InputDecoration(
@@ -205,10 +204,20 @@ class _usersignupState extends State<usersignup> {
                     if (value == null || value.isEmpty) {
                       return 'Please enter your phone number';
                     }
+
+                    // Phone number validation
+                    // Adjust the regular expression as per your desired phone number format
+
+                    final phoneRegex = r'^[0-9]{10}$';
+                    if (!RegExp(phoneRegex).hasMatch(value)) {
+                      return 'Please enter a valid 10-digit phone number';
+                    }
+
                     return null;
                   },
                 ),
               ),
+
               Padding(
                 padding:
                 const EdgeInsets.only(left: 100.0, right: 100.0, bottom: 20),

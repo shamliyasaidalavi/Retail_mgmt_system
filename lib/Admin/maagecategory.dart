@@ -97,7 +97,7 @@ class _category1State extends State<category1> {
                                       decoration: BoxDecoration(
                                         shape: BoxShape.circle,
                                         image: DecorationImage(
-                                          image: AssetImage(containerImages[index]),
+                                          image: AssetImage("server/public/images/"+snapshot.data![index].image),
                                           fit: BoxFit.cover,
                                         ),
                                       ),
@@ -109,7 +109,7 @@ class _category1State extends State<category1> {
 
 
                                         Text(
-                                          " category:${(snapshot.data![index].category)}",
+                                          " category:${(snapshot.data![index].name)}",
                                           style: TextStyle(
                                             fontSize: 14,
                                             color: Colors.grey[600],

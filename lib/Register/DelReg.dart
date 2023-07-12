@@ -202,26 +202,35 @@ class _DelRegState extends State<DelReg> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(
-                    left: 100.0, right: 100.0, bottom: 20),
+                padding: const EdgeInsets.only(left: 100.0, right: 100.0, bottom: 20),
                 child: TextFormField(
                   controller: phoneNumberController,
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'Phone number is required';
-                    }
-                    // Add phone number format validation logic if needed
-                    return null;
-                  },
                   decoration: InputDecoration(
                     labelStyle: TextStyle(color: Colors.black),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10.0),
                     ),
-                    labelText: "Phone number",
+                    labelText: "Phone Number",
                   ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your phone number';
+                    }
+
+                    // Phone number validation
+                    // Adjust the regular expression as per your desired phone number format
+
+                    final phoneRegex = r'^[0-9]{10}$';
+                    if (!RegExp(phoneRegex).hasMatch(value)) {
+                      return 'Please enter a valid 10-digit phone number';
+                    }
+
+                    return null;
+                  },
                 ),
               ),
+
+
               Padding(
                 padding: const EdgeInsets.only(
                     left: 100.0, right: 100.0, bottom: 20),

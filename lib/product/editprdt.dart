@@ -1,13 +1,82 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:trip/Admin/maagecategory.dart';
+import 'package:trip/Api/api.dart';
 
 class Prdtedit extends StatefulWidget {
-  const Prdtedit({Key? key}) : super(key: key);
+  String id;
+  Prdtedit({required  this.id});
+
 
   @override
   State<Prdtedit> createState() => _PrdteditState();
 }
 
 class _PrdteditState extends State<Prdtedit> {
+  TextEditingController productnameController = TextEditingController();
+  TextEditingController categoryController = TextEditingController();
+  TextEditingController quantityController = TextEditingController();
+  TextEditingController descriptionController = TextEditingController();
+  late String id;
+  String product_name = "";
+  String category = "";
+  String quantity = "";
+  String description = "";
+  initState() {
+    super.initState();
+    _viewPro();
+  }
+
+  Future<void> _viewPro() async {
+    String se=widget.id;
+    print(widget.id);
+    print("user selected id is${se}");
+    var res = await Api().getData('/product/view-single-product/${widget.id}');
+    var body = json.decode(res.body);
+    print("body${body}");
+    setState(() {
+      product_name = body['data']['product_name'];
+      category = body['data']['category'];
+      quantity = body['data']['quantity'];
+      description = body['data']['description'];
+     productnameController.text = product_name;
+      categoryController.text = category;
+      quantityController.text = quantity;
+      descriptionController.text = description;
+
+    });
+  }
+  _update() async {
+    setState(() {
+      var _isLoading = true;
+    });
+    String se=widget.id;
+    var data = {
+      "product_name": productnameController.text,
+      "category": categoryController.text,
+      "quantity": quantityController.text,
+      "description": descriptionController.text,
+    };
+    print(data);
+    var res = await Api().authData(data, '/product/update-single-product/'+se);
+    var body = json.decode(res.body);
+
+    if (body['success'] == true) {
+      print(body);
+
+      Fluttertoast.showToast(
+        msg: body['message'].toString(),
+        backgroundColor: Colors.grey,
+      );
+ } else {
+      Fluttertoast.showToast(
+        msg: body['message'].toString(),
+        backgroundColor: Colors.grey,
+      );
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,6 +112,7 @@ class _PrdteditState extends State<Prdtedit> {
     padding: const EdgeInsets.symmetric(horizontal: 8.0),
     // Use a Material design search bar
     child: TextField(
+      controller:productnameController,
     decoration: InputDecoration(
     filled: true,
     fillColor: Colors.white,
@@ -61,13 +131,14 @@ class _PrdteditState extends State<Prdtedit> {
     padding: const EdgeInsets.symmetric(horizontal: 8.0),
     // Use a Material design search bar
     child: TextField(
+      controller:categoryController,
     decoration: InputDecoration(
     filled: true,
     fillColor: Colors.white,
     border:OutlineInputBorder(
     borderRadius: BorderRadius.circular(15),
     ),
-    labelText: 'product id',
+    labelText: 'category',
     ),
     ),
     ),
@@ -79,6 +150,7 @@ class _PrdteditState extends State<Prdtedit> {
     padding: const EdgeInsets.symmetric(horizontal: 8.0),
     // Use a Material design search bar
     child: TextField(
+      controller:quantityController,
     decoration: InputDecoration(
     filled: true,
     fillColor: Colors.white,
@@ -97,6 +169,7 @@ class _PrdteditState extends State<Prdtedit> {
     padding: const EdgeInsets.symmetric(horizontal: 8.0),
     // Use a Material design search bar
     child: TextField(
+      controller:descriptionController,
     decoration: InputDecoration(
     filled: true,
     fillColor: Colors.white,
@@ -115,10 +188,11 @@ class _PrdteditState extends State<Prdtedit> {
             children: [
               ElevatedButton(
                 onPressed: () {
+                  _update();
                   // Add your action here
                 },
                 child: Text(
-                  'UPLOAD',
+                  'UPDATE',
                   style: TextStyle(
                     fontSize: 16,
                   ),

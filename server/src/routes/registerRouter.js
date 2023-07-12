@@ -34,7 +34,7 @@ registerRouter.get('/view-users', async function (req, res) {
                     '_id':'$_id',
                     
                    
-                    'id':{'$first':'$_id'},
+                
                     'logid':{'$first':'$login._id'},
                      'first_name':{'$first':'$first_name'},
                     'Phone_no':{'$first':'$Phone_no'},
@@ -98,7 +98,7 @@ registerRouter.get('/view-usersaproov', async function (req, res) {
                     '_id':'$_id',
                     
                    
-                    'id':{'$first':'$_id'},
+                    
                     'logid':{'$first':'$login._id'},
                      'first_name':{'$first':'$first_name'},
                     'Phone_no':{'$first':'$Phone_no'},
@@ -380,6 +380,70 @@ registerRouter.get('/view-delivery', async function (req, res) {
             }
             },
             {
+                '$match':{
+                    "login.status":'0'
+                }
+            },
+            {
+                '$unwind':"$login"
+            },
+            {
+                '$group':{
+                    '_id':'$_id',
+                    'logid':{'$first':'$login._id'},
+                    'deliveryboy_name':{'$first':'$deliveryboy_name'},
+                    'Phone_no':{'$first':'$phone_no'},
+                    'del_id':{'$first':'$del_id'},
+                    'status':{'$first':'$login.status'},
+                    'address':{'$first':'$address'},
+                    'email':{'$first':'$email'},
+                    'username':{'$first':'$login.username'},
+                    
+                }
+            }
+          ])
+        if(!allUser){
+           return res.status(400).json({
+                success:false,
+                error:true,
+                message:"No data exist"
+            })
+        }
+        return res.status(200).json({
+            success:true,
+            error:false,
+            data:allUser
+        })
+        
+
+      
+      
+    } catch (error) {
+        return res.status(400).json({
+            success:true,
+            error:false,
+            message:"Something went wrong"
+        })
+    }
+    
+})
+registerRouter.get('/view-deliveryap', async function (req, res) {
+    try {
+
+        const allUser = await deliveryboyModel.aggregate([
+            { '$lookup': {
+                'from': 'login_tbs', 
+                'localField': 'login_id', 
+                'foreignField': '_id', 
+                'as': 'login'
+            }
+            },
+            {
+                '$match':{
+                    "login.status":'1'
+                }
+            },
+            {
                 '$unwind':"$login"
             },
             {
@@ -420,7 +484,10 @@ registerRouter.get('/view-delivery', async function (req, res) {
             message:"Something went wrong"
         })
     }
+    
 })
+
+
 registerRouter.post('/user-register', async function (req, res) {
     try {
         const oldUser = await loginModel.findOne({ username: req.body.username })
@@ -678,4 +745,5 @@ registerRouter.get('/approve/:id', async (req, res) => {
       });
     }
   });
+  
 module.exports = registerRouter

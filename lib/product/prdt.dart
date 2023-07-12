@@ -19,6 +19,7 @@ class _PrdtState extends State<Prdt> {
     'images/two.jpg',
     'images/three.jpg',
   ];
+  String id="";
   List _loadprooducts = [];
   ApiService client = ApiService();
   final List<String> product_name = ["jaya", "Chicken", "onion", "Mango"];
@@ -63,100 +64,107 @@ class _PrdtState extends State<Prdt> {
                 style: TextStyle(fontWeight: FontWeight.w400, fontSize: 40),
               ),
             ),
-            FutureBuilder<List< productModel>>(
-            future: client.fetchproduct(),
-    builder: (BuildContext context,
-    AsyncSnapshot<List< productModel>> snapshot) {
-      if (snapshot.hasData) {
-        return ListView.separated(
-          shrinkWrap: true,
-          physics: NeverScrollableScrollPhysics(),
-          separatorBuilder: (context, index) {
-            return SizedBox(
-              height: 10,
-            );
-          },
-          itemCount:snapshot.data!.length,
-          itemBuilder: (context, index) {
-            return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: Card(
-                elevation: 2,
-                child: InkWell(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => Prdtedit()),
-                    );
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Container(
-                          width: 80,
-                          height: 80,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            image: DecorationImage(
-                              image: AssetImage(containerImages[index]),
-                              fit: BoxFit.cover,
+            FutureBuilder<List<productModel>>(
+              future: client.fetchproduct(),
+              builder: (BuildContext context,
+                  AsyncSnapshot<List<productModel>> snapshot) {
+                if (snapshot.hasData) {
+                  return ListView.separated(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    separatorBuilder: (context, index) {
+                      return SizedBox(
+                        height: 10,
+                      );
+                    },
+                    itemCount: snapshot.data!.length,
+
+                    itemBuilder: (context, index) {
+                     id =snapshot.data![index].id;
+                     print("prod id${id}");
+                      final imageIndex = index % containerImages.length;
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                        child: Card(
+                          elevation: 2,
+                          child: InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => Prdtedit(id:id)),
+                              );
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.all(10),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Container(
+                                    width: 80,
+                                    height: 80,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      image: DecorationImage(
+                                        image: AssetImage(
+                                            containerImages[imageIndex]),
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(width: 20),
+                                  Column(
+                                    crossAxisAlignment:
+                                    CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        " Name:${(snapshot.data![index].productname)}",
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 16,
+                                        ),
+                                      ),
+                                      SizedBox(height: 4),
+                                      Text(
+                                        " quantity:${(snapshot.data![index].quantity)}",
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          color: Colors.grey[600],
+                                        ),
+                                      ),
+                                      SizedBox(height: 4),
+                                      Text(
+                                        " category:${(snapshot.data![index].category)}",
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          color: Colors.grey[600],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  Spacer(),
+                                  IconButton(
+                                    icon: Icon(Icons.edit),
+                                    color: Colors.grey[600],
+                                    onPressed: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>Prdtedit(id: id)),
+                                      );
+                                    },
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ),
-                        SizedBox(width: 20),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                             " Name:${(snapshot.data![index].productname)}",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
-                              ),
-                            ),
-                            SizedBox(height: 4),
-                            Text(
-                              " quantity:${(snapshot.data![index].quantity)}",
-                              style: TextStyle(
-                                fontSize: 14,
-                                color: Colors.grey[600],
-                              ),
-                            ),
-                            SizedBox(height: 4),
-                            Text(
-                              " category:${(snapshot.data![index].category)}",
-                              style: TextStyle(
-                                fontSize: 14,
-                                color: Colors.grey[600],
-                              ),
-                            ),
-                          ],
-                        ),
-                        Spacer(),
-                        IconButton(
-                          icon: Icon(Icons.edit),
-                          color: Colors.grey[600],
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => Prdtedit()),
-                            );
-                          },
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            );
-          },
-        );
-    }
-      return Center(child: CircularProgressIndicator());
-    }
+                      );
+                    },
+                  );
+                }
+                return Center(child: CircularProgressIndicator());
+              },
             ),
           ],
         ),
