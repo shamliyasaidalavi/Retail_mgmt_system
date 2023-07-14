@@ -51,6 +51,7 @@ cartRouter.post('/cart/:', async function (req, res) {
   }
 });
 cartRouter.post('/cart', async (req, res) => {
+    console.log(req.body);
     try {
         const old = await cart.findOne({ user_id: req.body.user_id, product_id: req.body.product_id, status: 0 })
         if (old) {
