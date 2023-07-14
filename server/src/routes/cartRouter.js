@@ -68,7 +68,7 @@ cartRouter.post('/cart', async (req, res) => {
             status: 0
         }
         console.log(data);
-        var result = await cart(data).save()
+        var result = await cartModel(data).save()
 
         if (result) {
             return res.status(200).json({

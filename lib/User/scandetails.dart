@@ -20,6 +20,7 @@ class scandetails extends StatefulWidget {
 }
 
 class _scandetailsState extends State<scandetails> {
+String qty='';
 
   bool _isLoading = false;
   String user_id = "";
@@ -171,6 +172,7 @@ class _scandetailsState extends State<scandetails> {
                 SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () {
+                    qty=widget.product.quantity;
                     AddCart();
 
                     // Add your logic for adding to cart here

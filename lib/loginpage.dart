@@ -52,11 +52,12 @@ class _LoginState extends State< Login> {
 
       role = json.encode(body['details']['role']);
       status = json.encode(body['details']['status']);
-
+      String id = json.encode(body['user_id']);
+      print("id${id}");
       localStorage = await SharedPreferences.getInstance();
       localStorage.setString('role', role.toString());
       localStorage.setString('login_id', json.encode(body['login_id']));
-      localStorage.setString('user_id', json.encode(body['user_id']));
+      localStorage.setString('user_id', id.toString());
 
       print('login_idss ${json.encode(body['login_id'])}');
 
