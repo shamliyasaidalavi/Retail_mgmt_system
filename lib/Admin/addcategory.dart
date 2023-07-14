@@ -32,7 +32,10 @@ class _addcategoryState extends State<addcategory> {
     setState(() {
       if (pickedFile != null) {
         _image = File(pickedFile.path);
-        _filename = basename(_image!.path).toString();
+
+        _filename = _image!.path.toString();
+
+
 
       } else {
         print('No image selected.');

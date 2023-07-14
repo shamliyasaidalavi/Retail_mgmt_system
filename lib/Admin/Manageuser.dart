@@ -34,6 +34,21 @@ class Manageuser extends StatelessWidget {
       );
     }
   }
+  Future reject(String godwnid) async {
+    print("u ${godwnid}");
+    var response = await Api().getData('/register/reject/'+godwnid);
+    if (response.statusCode == 200) {
+      var items = json.decode(response.body);
+      print("approve status${items}");
+      Fluttertoast.showToast(
+        msg: "reject",
+      );
+    } else {
+      Fluttertoast.showToast(
+        msg: "Error",
+      );
+    }
+  }
   late String godwnid;
 
   final List<String> entries1 = ['Counter1', 'Counter2'];
@@ -123,7 +138,7 @@ class Manageuser extends StatelessWidget {
                                 ),
                                 onPressed: () {
                                   // Handle decline button pressed
-                                  _declineUser(index);
+                                   reject(godwnid);
                                 },
                               ),
 

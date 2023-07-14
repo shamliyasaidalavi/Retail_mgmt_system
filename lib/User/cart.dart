@@ -1,12 +1,21 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:quantity_input/quantity_input.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:trip/Api/api.dart';
 
 import 'package:trip/User/paymet.dart';
 
+import '../Admin/model/productmodel.dart';
 import 'placeorder.dart';
 
 class Cart extends StatefulWidget {
-  const Cart({Key? key}) : super(key: key);
+   Cart({ this.product,Key? key}) : super(key: key);
+
+
+  productModel ? product;
 
   @override
   State<Cart> createState() => _CartState();
@@ -27,8 +36,8 @@ final List<String> Titles = [
   "Rs50-4 items",
   "Rs60.20-3 items"
 ];
-
 class _CartState extends State<Cart> {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -124,14 +133,12 @@ class _CartState extends State<Cart> {
                         children: <Widget>[
                           Text('Shipping'),
                           Text('Offer'),
-                          Text('Tax'),
                           Text('Sub Total'),
                         ],
                       ),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: <Widget>[
-                          Text('\u{20B9} 80'),
                           Text('- \u{20B9} 100'),
                           Text('\u{20B9} 1,799'),
                           Text('\u{20B9} 8,200'),
@@ -159,8 +166,8 @@ class _CartState extends State<Cart> {
                       "Place Order",
                       style: TextStyle(fontSize: 18),
                     ),
-                  ),
                 ),
+              ),
               ),
             ),
           ],

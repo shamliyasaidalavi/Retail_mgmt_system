@@ -1,6 +1,8 @@
 const express = require('express');
 const loginModel = require('../models/loginModel');
 const productModel = require('../models/ProductModel');
+const qr = require('qr-image');
+const fs = require('fs');
 const productRouter = express.Router();
 productRouter.get('/view-product', async (req, res) => {
   try {
@@ -40,12 +42,24 @@ productRouter.post('/product', async function (req, res) {
     const datas = await productModel(data).save()
     console.log(datas);
     if (datas) {
-      return res.status(200).json({
-          success: true,
-          error: false,
-          details: datas,
-          message: "item added completed"
-      })
+        if (datas) {
+            const qrCode = qr.image(JSON.stringify(datas._id), { type: 'png' });
+            const qrCodeFilePath = `public/qrcodes/${datas.product_name}.png`;
+              const qrCodeFile = fs.createWriteStream(qrCodeFilePath);
+              qrCode.pipe(qrCodeFile);
+              qrCodeFile.on('finish', () => {
+                console.log('QR code generated and saved');
+                // Send the response with the QR code file path
+                return res.status(200).json({
+                    success: true,
+                    error: false,
+                    details: datas,
+                    message: "item added completed"
+                })
+              });
+           
+        }
+      
   }
     
   } catch (error) {
@@ -121,7 +135,7 @@ productRouter.post('/update-single-product/:id', async function (req, res) {
     }
 });  
   
-productRouter.get('/delete-single-product/:id', async function (req, res) { 
+productRouter.post('/delete-single-product/:id', async function (req, res) { 
     try {
         const productId = req.params.id; 
       

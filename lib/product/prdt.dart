@@ -82,84 +82,81 @@ class _PrdtState extends State<Prdt> {
                     itemBuilder: (context, index) {
                      id =snapshot.data![index].id;
                      print("prod id${id}");
-                      final imageIndex = index % containerImages.length;
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                        child: Card(
+                 final imageIndex = index % containerImages.length;
+                 return InkWell(
+                   onTap: () {
+                     Navigator.push(
+                       context,
+                       MaterialPageRoute(
+                           builder: (context) => Prdtedit(id:id)),
+                     );
+                   },
+                   child: Card(
                           elevation: 2,
-                          child: InkWell(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => Prdtedit(id:id)),
-                              );
-                            },
-                            child: Padding(
-                              padding: const EdgeInsets.all(10),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Container(
-                                    width: 80,
-                                    height: 80,
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      image: DecorationImage(
-                                        image: AssetImage(
-                                            containerImages[imageIndex]),
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(width: 20),
-                                  Column(
-                                    crossAxisAlignment:
-                                    CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        " Name:${(snapshot.data![index].productname)}",
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 16,
-                                        ),
-                                      ),
-                                      SizedBox(height: 4),
-                                      Text(
-                                        " quantity:${(snapshot.data![index].quantity)}",
-                                        style: TextStyle(
-                                          fontSize: 14,
-                                          color: Colors.grey[600],
-                                        ),
-                                      ),
-                                      SizedBox(height: 4),
-                                      Text(
-                                        " category:${(snapshot.data![index].category)}",
-                                        style: TextStyle(
-                                          fontSize: 14,
-                                          color: Colors.grey[600],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  Spacer(),
-                                  IconButton(
-                                    icon: Icon(Icons.edit),
-                                    color: Colors.grey[600],
-                                    onPressed: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>Prdtedit(id: id)),
-                                      );
-                                    },
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
+                     child: Padding(
+                       padding: const EdgeInsets.all(10),
+                       child: Row(
+                         crossAxisAlignment: CrossAxisAlignment.center,
+                         children: [
+                           Container(
+                             width: 80,
+                             height: 80,
+                             decoration: BoxDecoration(
+                               shape: BoxShape.circle,
+                               image: DecorationImage(
+                                 image: AssetImage(
+                                     containerImages[imageIndex]),
+                                 fit: BoxFit.cover,
+                               ),
+                             ),
+                           ),
+                           SizedBox(width: 20),
+                           Column(
+                             crossAxisAlignment:
+                             CrossAxisAlignment.start,
+                             children: [
+                               Text(
+                                 " Name:${(snapshot.data![index].productname)}",
+                                 style: TextStyle(
+                                   fontWeight: FontWeight.bold,
+                                   fontSize: 16,
+                                 ),
+                               ),
+                               SizedBox(height: 4),
+                               Text(
+                                 " quantity:${(snapshot.data![index].quantity)}",
+                                 style: TextStyle(
+                                   fontSize: 14,
+                                   color: Colors.grey[600],
+                                 ),
+                               ),
+                               SizedBox(height: 4),
+                               Text(
+                                 " category:${(snapshot.data![index].category)}",
+                                 style: TextStyle(
+                                   fontSize: 14,
+                                   color: Colors.grey[600],
+                                 ),
+                               ),
+                             ],
+                           ),
+                           Spacer(),
+                           IconButton(
+                             icon: Icon(Icons.edit),
+                             color: Colors.grey[600],
+                             onPressed: () {
+                               Navigator.push(
+                                 context,
+                                 MaterialPageRoute(
+                                     builder: (context) =>Prdtedit(id: id)),
+                               );
+                             },
+                           ),
+                         ],
+                       ),
+                     ),
                         ),
-                      );
+                 );
                     },
                   );
                 }

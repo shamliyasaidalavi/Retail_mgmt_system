@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const registerRouter = require('./src/routes/registerRouter');
 
 const productRouter = require('./src/routes/productrouter');
-const cartRouter = require('./src/routes/cartrouter');
+const cartRouter = require('./src/routes/cartRouter');
 const counterRouter = require('./src/routes/counterRouter');
 const godownRouter = require('./src/routes/godownRouter');
 const deliveryboyRouter = require('./src/routes/deliveryboyRouter');

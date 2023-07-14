@@ -145,11 +145,35 @@ class ApiService {
       return products;
     }
   }
+  Future<productModel> fetchsingleprdt(String barcode) async {
+
+
+    var response = await Api().getData('/product/view-single-product/${barcode}');
+
+    if (response.statusCode == 200) {
+      var item = await json.decode(response.body);
+
+       var singleItem = item['data'];
+
+
+
+       var products =   productModel.fromJson(item['data']);
+
+
+
+
+
+      return products;
+    } else {
+
+      throw  'Something Went Wrong';
+    }
+  }
   Future<List<paymentModel>> fetchpayment() async {
     var response = await Api().getData('/product/view');
     if (response.statusCode == 200) {
       var items = json.decode(response.body);
-      print((items));
+
 
       List<paymentModel> products = List<paymentModel>.from(
           items['data'].map((e) => paymentModel.fromJson(e)).toList());

@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:trip/Api/api.dart';
 import 'package:trip/product/prdt.dart';
 
@@ -11,6 +12,8 @@ class PrdtDtls extends StatefulWidget {
 }
 
 class _PrdtDtlsState extends State<PrdtDtls> {
+
+
   bool _isLoading = false;
   final _formKey = GlobalKey<FormState>(); // GlobalKey for the form
 
@@ -33,7 +36,7 @@ class _PrdtDtlsState extends State<PrdtDtls> {
       "quantity": _quantityController.text,
       "price": _priceController.text,
     };
-    var res = await Api().authData(data,'/product/product');
+    var res = await Api().authData(data, '/product/product');
     var body = json.decode(res.body);
     print(body);
     if (body['success'] == true) {
@@ -69,121 +72,122 @@ class _PrdtDtlsState extends State<PrdtDtls> {
       appBar: AppBar(
         title: Text('Product Details'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Image.asset(
-              'images/two.jpg',
-              height: 200,
-              fit: BoxFit.cover,
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                // Add padding around the search bar
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                // Use a Material design search bar
-                child: TextField(
-                  controller: _productnameController,
-                  decoration: InputDecoration(
-                    filled: true,
-                    fillColor: Colors.white,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(15),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Image.asset(
+                'images/two.jpg',
+                height: 200,
+                fit: BoxFit.cover,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  // Add padding around the search bar
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  // Use a Material design search bar
+                  child: TextField(
+                    controller: _productnameController,
+                    decoration: InputDecoration(
+                      filled: true,
+                      fillColor: Colors.white,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      labelText: 'Product Name',
                     ),
-                    labelText: 'Product Name',
                   ),
                 ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                // Add padding around the search bar
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                // Use a Material design search bar
-                child: TextField(
-                  controller: _descriptionController,
-                  decoration: InputDecoration(
-                    filled: true,
-                    fillColor: Colors.white,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(15),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  // Add padding around the search bar
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  // Use a Material design search bar
+                  child: TextField(
+                    controller: _descriptionController,
+                    decoration: InputDecoration(
+                      filled: true,
+                      fillColor: Colors.white,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      labelText: 'Product Description',
                     ),
-                    labelText
-                        : 'Product Description',
                   ),
                 ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                // Add padding around the search bar
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                // Use a Material design search bar
-                child: TextField(
-                  controller: _quantityController,
-                  decoration: InputDecoration(
-                    filled: true,
-                    fillColor: Colors.white,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(15),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  // Add padding around the search bar
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  // Use a Material design search bar
+                  child: TextField(
+                    controller: _quantityController,
+                    decoration: InputDecoration(
+                      filled: true,
+                      fillColor: Colors.white,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      labelText: 'Quantity',
                     ),
-                    labelText: 'Quantity',
                   ),
                 ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                // Add padding around the search bar
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                // Use a Material design search bar
-                child: TextField(
-                  controller: _categoryController,
-                  decoration: InputDecoration(
-                    filled: true,
-                    fillColor: Colors.white,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(15),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  // Add padding around the search bar
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  // Use a Material design search bar
+                  child: TextField(
+                    controller: _categoryController,
+                    decoration: InputDecoration(
+                      filled: true,
+                      fillColor: Colors.white,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      labelText: 'Category',
                     ),
-                    labelText: 'Category',
                   ),
                 ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                // Add padding around the search bar
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                // Use a Material design search bar
-                child: TextField(
-                  controller: _priceController,
-                  decoration: InputDecoration(
-                    filled: true,
-                    fillColor: Colors.white,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(15),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  // Add padding around the search bar
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  // Use a Material design search bar
+                  child: TextField(
+                    controller: _priceController,
+                    decoration: InputDecoration(
+                      filled: true,
+                      fillColor: Colors.white,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      labelText: 'Price',
                     ),
-                    labelText: 'Price',
                   ),
                 ),
               ),
-            ),
-            Center(
-              child: ElevatedButton(
-                onPressed: () {
-                  addproduct(context); // Call registerUser method and pass the context
-                },
-                child: Text('Submit'),
+              Center(
+                child: ElevatedButton(
+                  onPressed: () {
+                    addproduct(context); // Call registerUser method and pass the context
+                  },
+                  child: Text('Submit'),
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

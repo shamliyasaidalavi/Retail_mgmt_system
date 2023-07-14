@@ -15,7 +15,7 @@ class mainscreen extends StatefulWidget {
 class _mainscreenState extends State<mainscreen> {
   List<Widget> pageList = [
   const Homepage1(),
-    const Cart(),
+     Cart(),
     const History(),
   ];
   int selectedIndex =0;
