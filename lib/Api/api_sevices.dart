@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:trip/Admin/model/cartModel.dart';
 import 'package:trip/Admin/model/categoryModel.dart';
 import 'package:trip/Admin/model/coutermodel.dart';
 import 'package:trip/Admin/model/deliveryModel.dart';
@@ -91,8 +92,8 @@ class ApiService {
     var response = await Api().getData('/register/view-godownaproov');
     if (response.statusCode == 200) {
       var items = json.decode(response.body);
-      print((items));
 
+      print((items));
       List<godowModel> products = List<godowModel>.from(
           items['data'].map((e) => godowModel.fromJson(e)).toList());
       return products;
@@ -159,14 +160,24 @@ class ApiService {
 
        var products =   productModel.fromJson(item['data']);
 
-
-
-
-
-      return products;
+       return products;
     } else {
 
       throw  'Something Went Wrong';
+    }
+  }
+  Future<List<cartModel>> fetchcart(String) async {
+    var response = await Api().getData('/cart/$user_id');
+    if (response.statusCode == 200) {
+      var items = json.decode(response.body);
+      print((items));
+
+      List<cartModel> products = List<cartModel>.from(
+          items['data'].map((e) => cartModel.fromJson(e)).toList());
+      return products;
+    } else {
+      List<cartModel> products = [];
+      return products;
     }
   }
   Future<List<paymentModel>> fetchpayment() async {

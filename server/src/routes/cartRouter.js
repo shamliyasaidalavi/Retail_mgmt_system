@@ -1,120 +1,110 @@
 const express = require('express');
 const cartModel = require('../models/CartModel');
-const orderModel = require('../models/orderModel');
-
 
 const cartRouter = express.Router();
+
+// View cart products for a specific user
 cartRouter.get('/view-product/:id', async (req, res) => {
   try {
-    const id = req.params.id
-      const users = await cartModel.find({user_id:id})
-      if(users[0]!=undefined){
-          return res.status(200).json({
-              success:true,
-              error:false,
-              data:users
-          })
-      }else{
-          return res.status(400).json({
-              success:false,
-              error:true,
-              message:"No data found"
-          })
-      }
-  } catch (error) {
-      return res.status(400).json({
-          success:false,
-          error:true,
-          message:"Something went wrong",
-          details:error
-      })
-  }
-  })
+    const id = req.params.id;
+    const cartProducts = await cartModel.find({ user_id: id });
 
-cartRouter.post('/cart/:', async function (req, res) {
-  try {
-    const data = {
-        
-         product_id: req.body.product_id,
-        quantity: req.body.quantity,
-       user_id:req.body.user_id,
-       status:0,
-       quantity:1,
-      
-    };
-    const datas = await cartModel(data).save()
-    
-    console.log(data);
-    
+    if (cartProducts.length > 0) {
+      return res.status(200).json({
+        success: true,
+        error: false,
+        data: cartProducts
+      });
+    } else {
+      return res.status(400).json({
+        success: false,
+        error: true,
+        message: "No data found"
+      });
+    }
   } catch (error) {
-    
+    return res.status(500).json({
+      success: false,
+      error: true,
+      message: "Something went wrong",
+      details: error
+    });
   }
 });
+
+// Add a product to the cart
 cartRouter.post('/cart', async (req, res) => {
-    console.log(req.body);
-    try {
-        const old = await cart.findOne({ user_id: req.body.user_id, product_id: req.body.product_id, status: 0 })
-        if (old) {
-            return res.status(400).json({
-                success: false,
-                error: true,
-                message: "Product already in cart"
-            })
-        }
-        const data = {
-            user_id: req.body.user_id,
-            product_id: req.body.product_id,
-            quantity: 1,
-            status: 0
-        }
-        console.log(data);
-        var result = await cartModel(data).save()
+  try {
+    const data = {
+      user_id: req.body.user_id,
+      product_id: req.body.product_id,
+      quantity: 1,
+      status: 0
+    };
 
-        if (result) {
-            return res.status(200).json({
-                success: true,
-                error: false,
-                data: result,
-                message: "Added to Cart"
-            })
-        }
+    const cartItem = await cartModel.findOne({
+      user_id: data.user_id,
+      product_id: data.product_id,
+      status: 0
+    });
 
-    } catch (err) {
-        return res.status(400).json({
-            success: false,
-            error: true,
-            message: "Something went wrong"
-        })
+    if (cartItem) {
+      return res.status(400).json({
+        success: false,
+        error: true,
+        message: "Product already in cart"
+      });
     }
-})
 
+    const result = await cartModel.create(data);
+
+    if (result) {
+      return res.status(200).json({
+        success: true,
+        error: false,
+        data: result,
+        message: "Added to Cart"
+      });
+    }
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      error: true,
+      message: "Something went wrong",
+      details: err
+    });
+  }
+});
+
+// Delete a single product from the cart
 cartRouter.post('/delete-single-product/:id', async function (req, res) { 
   try {
-      const productId = req.params.id; 
+    const productId = req.params.id; 
     
-      const product = await orderModel.deleteOne({_id:productId})
+    const deletedProduct = await cartModel.findByIdAndDelete(productId);
 
-      if (product.deletedCount!=1) { 
-          return res.status(400).json({
-              success: false,
-              error: true,
-              message: "Data not deleted"
-          });
-      }
-
-      return res.status(200).json({
-          success: true,
-          error: false,
-          data: product,
-          message:"Data deleted"
+    if (!deletedProduct) { 
+      return res.status(400).json({
+        success: false,
+        error: true,
+        message: "Data not deleted or not found"
       });
+    }
+
+    return res.status(200).json({
+      success: true,
+      error: false,
+      data: deletedProduct,
+      message: "Data deleted"
+    });
 
   } catch (error) {
-      return res.status(400).json({
-          success: false,
-          error: true,
-          message: "Something went wrong"
-      });
+    return res.status(500).json({
+      success: false,
+      error: true,
+      message: "Something went wrong",
+      details: error
+    });
   }
 });
 

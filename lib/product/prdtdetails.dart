@@ -30,6 +30,8 @@ class _PrdtDtlsState extends State<PrdtDtls> {
   final TextEditingController _quantityController = TextEditingController();
   final TextEditingController _categoryController = TextEditingController();
   final TextEditingController _priceController = TextEditingController();
+  final TextEditingController _filenController = TextEditingController();
+
 
   Future getImage() async {
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
@@ -38,8 +40,8 @@ class _PrdtDtlsState extends State<PrdtDtls> {
       if (pickedFile != null) {
         _image = File(pickedFile.path);
 
-        _filename = _image!.path.toString();
-
+       // _filename = _image!.path.toString();
+        _filename = basename(_image!.path).toString();
 
 
       } else {
@@ -65,6 +67,7 @@ class _PrdtDtlsState extends State<PrdtDtls> {
     print(body);
     if (body['success'] == true) {
       print(body);
+      addImage();
       Fluttertoast.showToast(
         msg: body['message'].toString(),
         backgroundColor: Colors.grey,

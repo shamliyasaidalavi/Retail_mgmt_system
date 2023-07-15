@@ -99,18 +99,23 @@ class _PrdtState extends State<Prdt> {
                        child: Row(
                          crossAxisAlignment: CrossAxisAlignment.center,
                          children: [
-                           Container(
-                             width: 80,
-                             height: 80,
-                             decoration: BoxDecoration(
-                               shape: BoxShape.circle,
-                               image: DecorationImage(
-                                 image: AssetImage(
-                                     "server/public/images/"+snapshot.data![index].image),
-                                 fit: BoxFit.cover,
-                               ),
+                           CircleAvatar(
+
+                               backgroundImage: AssetImage("server/public/images/"+snapshot.data![index].image),
+                             radius: 40,
+                           ),
+                          /* Container(
+                           width: 80,
+                           height: 80,
+                           decoration: BoxDecoration(
+                             shape: BoxShape.circle,
+                             image: DecorationImage(
+                               image: AssetImage("server/public/images/"+snapshot.data![index].image),
+                               fit: BoxFit.cover,
                              ),
                            ),
+                         ),*/
+
                            SizedBox(width: 20),
                            Column(
                              crossAxisAlignment:
