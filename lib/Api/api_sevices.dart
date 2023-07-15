@@ -170,7 +170,7 @@ class ApiService {
     }
   }
   Future<List<paymentModel>> fetchpayment() async {
-    var response = await Api().getData('/product/view');
+    var response = await Api().getData('/paymet/view');
     if (response.statusCode == 200) {
       var items = json.decode(response.body);
 

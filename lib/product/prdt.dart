@@ -26,6 +26,7 @@ class _PrdtState extends State<Prdt> {
   final List<String> quantity = ["2kg", "5kg", "4kg", "3kg"];
   final List<String> category = ["Rice", "Meat", "vegetable", "fruit"];
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -105,7 +106,7 @@ class _PrdtState extends State<Prdt> {
                                shape: BoxShape.circle,
                                image: DecorationImage(
                                  image: AssetImage(
-                                     containerImages[imageIndex]),
+                                     "server/public/images/"+snapshot.data![index].image),
                                  fit: BoxFit.cover,
                                ),
                              ),

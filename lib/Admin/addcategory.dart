@@ -190,7 +190,3 @@ class _addcategoryState extends State<addcategory> {
     );
   }
 }
-
-void main() {
-  runApp(MaterialApp(home: addcategory()));
-}

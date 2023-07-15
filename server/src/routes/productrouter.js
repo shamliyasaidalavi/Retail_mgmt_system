@@ -1,9 +1,26 @@
 const express = require('express');
 const loginModel = require('../models/loginModel');
 const productModel = require('../models/ProductModel');
+const multer = require('multer');
 const qr = require('qr-image');
 const fs = require('fs');
 const productRouter = express.Router();
+
+var storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, "./public/images/")
+    },
+    filename: function (req, file, cb) {
+        cb(null,file.originalname)
+    }
+  })
+  
+  var upload = multer({ storage: storage })
+
+  productRouter.post('/upload', upload.single("file"), (req, res) => {
+    console.log("jh",req.file.filename);
+    return res.json("file uploaded")
+  })
 productRouter.get('/view-product', async (req, res) => {
   try {
       const users = await productModel.find()
@@ -29,6 +46,7 @@ productRouter.get('/view-product', async (req, res) => {
       })
   }
   })
+  
 productRouter.post('/product', async function (req, res) {
   try {
     const data = {
@@ -37,7 +55,7 @@ productRouter.post('/product', async function (req, res) {
         price: req.body.price,
         description: req.body.description,
         category: req.body.category, 
-      
+      product_image:req.body.product_image,
     };
     const datas = await productModel(data).save()
     console.log(datas);
@@ -107,7 +125,8 @@ productRouter.post('/update-single-product/:id', async function (req, res) {
             product_name : req.body.product_name,
             quantity : req.body.quantity,
             category : req.body. category,
-            description : req.body. description
+            description : req.body. description,
+            product_image : req.body.product_image
         }
         const product = await productModel.updateOne({_id:productId},{$set:details})
 

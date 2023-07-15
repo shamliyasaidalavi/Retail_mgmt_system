@@ -6,7 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:trip/Admin/model/productmodel.dart';
 import 'package:trip/Api/api.dart';
 import 'package:trip/User/cart.dart';
-import 'package:trip/User/placeorder.dart';
+
 
 class scandetails extends StatefulWidget {
   const scandetails({
@@ -54,7 +54,9 @@ String qty='';
         quantity: '1',
         price: '40',
         description: 'its veg ad fresh',
+        image: '',
         id:  '2',
+
 
 
       ),),));
