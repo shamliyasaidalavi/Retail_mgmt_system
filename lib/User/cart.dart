@@ -112,43 +112,7 @@ class _CartState extends State<Cart> {
                 );
               },
             ),
-            Container(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  TextField(
-                    obscureText: true,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Promo Code',
-                    ),
-                  ),
-                  SizedBox(height: 16),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text('Shipping'),
-                          Text('Offer'),
-                          Text('Sub Total'),
-                        ],
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: <Widget>[
-                          Text('- \u{20B9} 100'),
-                          Text('\u{20B9} 1,799'),
-                          Text('\u{20B9} 8,200'),
-                        ],
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
+
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: SizedBox(

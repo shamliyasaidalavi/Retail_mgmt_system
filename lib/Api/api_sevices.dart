@@ -166,8 +166,8 @@ class ApiService {
       throw  'Something Went Wrong';
     }
   }
-  Future<List<cartModel>> fetchcart(String) async {
-    var response = await Api().getData('/cart/$user_id');
+  Future<List<cartModel>> fetchcart(String userid) async {
+    var response = await Api().getData('/cart/'+userid);
     if (response.statusCode == 200) {
       var items = json.decode(response.body);
       print((items));
