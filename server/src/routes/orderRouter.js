@@ -2,7 +2,7 @@ const express = require('express');
 
 const orderModel = require('../models/orderModel');
 const orderRouter = express.Router();
-orderRouter.get('/view-product/:id', async (req, res) => {
+orderRouter.get('/view-order/:id', async (req, res) => {
   try {
     const id = req.params.id
       const users = await orderModel.find({user_id:id})
@@ -31,6 +31,7 @@ orderRouter.get('/view-product/:id', async (req, res) => {
 orderRouter.post('/order', async function (req, res) {
   try {
     const data = {
+        user_id:req.body.user_id,
         order_name: req.body. order_name ,
         order_id: req.body.order_id,
         quantity: req.body.quantity,

@@ -1,7 +1,8 @@
-const express = require('express');
+const express = require ('express');
 const cartModel = require('../models/CartModel');
 const productModel = require('../models/ProductModel');
-
+const { default: mongoose } = require('mongoose');
+const objectId = mongoose.Types.ObjectId
 
 const cartRouter = express.Router();
 cartRouter.get('/view_cart/:id', async (req, res) => {
@@ -36,7 +37,7 @@ cartRouter.get('/view_cart/:id', async (req, res) => {
                   '_id': '$_id',
                   'quantity': { '$first': '$quantity' },
                   'status': { '$first': '$status' },
-                  'product_name': { '$first': '$product.productname' },
+                  'product_name': { '$first': '$product.product_name' },
                   'description': { '$first': '$product.description' },
                   'product_image': { '$first': '$product.product_image' },
                   'price': { '$first': '$product.price' },
@@ -71,7 +72,7 @@ cartRouter.get('/view_cart/:id', async (req, res) => {
               success: true,
               error: false,
               data: data,
-
+              totalValue:totalValue
           })
       }
 
@@ -79,7 +80,7 @@ cartRouter.get('/view_cart/:id', async (req, res) => {
       return res.status(400).json({
           success: false,
           error: true,
-          message: "Something went wrong"
+          message: "Something went wrongz"
       })
   }
 })
@@ -211,8 +212,6 @@ cartRouter.post('/cart', async (req, res) => {
         })
     }
 })
-
-
 
 
 module.exports = cartRouter;

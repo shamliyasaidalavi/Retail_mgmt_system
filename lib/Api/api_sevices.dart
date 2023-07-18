@@ -166,17 +166,17 @@ class ApiService {
       throw  'Something Went Wrong';
     }
   }
-  Future<List<cartModel>> fetchcart(String userid) async {
+  Future<List<CartModel>> fetchcart(String userid) async {
     var response = await Api().getData('/cart/'+userid);
     if (response.statusCode == 200) {
       var items = json.decode(response.body);
       print((items));
 
-      List<cartModel> products = List<cartModel>.from(
-          items['data'].map((e) => cartModel.fromJson(e)).toList());
+      List<CartModel> products = List<CartModel>.from(
+          items['data'].map((e) => CartModel.fromJson(e)).toList());
       return products;
     } else {
-      List<cartModel> products = [];
+      List<CartModel> products = [];
       return products;
     }
   }
