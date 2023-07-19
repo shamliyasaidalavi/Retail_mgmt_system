@@ -5,6 +5,74 @@ const { default: mongoose } = require('mongoose');
 const objectId = mongoose.Types.ObjectId
 
 const cartRouter = express.Router();
+cartRouter.get('/myorder', async (req, res) => {
+    try {
+      const id = req.params.id;
+  
+      const orders = await cartModel.aggregate([
+        {
+          $lookup: {
+            from: 'user_tbs',
+            localField: 'user_id',
+            foreignField: '_id',
+            as: 'user',
+          },
+        },
+        {
+            $lookup: {
+              from: 'product_tbs',
+              localField: 'product_id',
+              foreignField: '_id',
+              as: 'prd',
+            },
+          },
+        {
+          $unwind: '$prd',
+        },
+        {
+            $unwind: '$user',
+          },
+        {
+          $match: { 'user.login_id':new mongoose.Types.ObjectId(id) },
+        },
+        {
+          $group: {
+            _id: '$_id',
+            quantity: { $first: '$quantity' },
+            status: { $first: '$status' },
+            logi_id: { $first: '$user.login_id' },
+            product_name: { $first: '$prd.product_name' },
+            quantity: { $first: '$prd.quantity' },
+            price: { $first: '$prd.price' },
+            description: { $first: '$prd.description'},
+            product_image: {$first: '$prd.product_image'},
+           
+          },
+        },
+      ]);
+  
+      if (orders.length > 0) {
+        return res.status(200).json({
+          success: true,
+          error: false,
+          data: orders,
+        });
+      } else {
+        return res.status(404).json({
+          success: false,
+          error: true,
+          message: 'No data found',
+        });
+      }
+    } catch (error) {
+      return res.status(400).json({
+        success: false,
+        error: true,
+        message: 'Something went wrong',
+        details: error.message,
+      });
+    }
+  });
 cartRouter.get('/view_cart/:id', async (req, res) => {
   try {
       const id = req.params.id
@@ -89,13 +157,13 @@ cartRouter.get('/increment/:id', async (req, res) => {
       const id = req.params.id
       const old = await cartModel.findOne({ _id: id })
       console.log(old);
-      const counts = old.quantity + 1
+      const counts = parseInt(old.quantity) + 1
 
       const add = await cartModel.updateOne({ _id: id }, { $set: { quantity: counts } })
 
       if (add.modifiedCount === 1) {
           const old_product = await productModel.findOne({ _id: old.product_id })
-          const available_counts = old_product.quantity + 1
+          const available_counts = parseInt(old_product.quantity) - 1
           const product = await productModel.updateOne({ _id: old.product_id }, { $set: { quantity: available_counts } })
 
           return res.status(201).json({
@@ -110,7 +178,7 @@ cartRouter.get('/increment/:id', async (req, res) => {
       }
   }
   catch (err) {
-      res.status(500).json({ success: false, error: true, message: 'Something Went Wrong' })
+      res.status(500).json({ success: false, error: true, message: 'Something Went Wrongg' })
       console.log(err)
   }
 })
@@ -120,13 +188,13 @@ cartRouter.get('/decrement/:id', async (req, res) => {
       const id = req.params.id
       const old = await cartModel.findOne({ _id: id })
       if (old.quantity > 1) {
-          const counts = old.quantity - 1
+          const counts = parseInt(old.quantity) - 1
 
           const add = await cartModel.updateOne({ _id: id }, { $set: { quantity: counts } })
 
           if (add.modifiedCount === 1) {
               const old_product = await productModel.findOne({ _id: old.product_id })
-              const available_counts = old_product.quantity - 1
+              const available_counts = parseInt(old_product.quantity) + 1
               const products = await productModel.updateOne({ _id: old.product_id }, { $set: { quantity: available_counts } })
 
               return res.status(201).json({
@@ -156,7 +224,7 @@ cartRouter.get('/decrement/:id', async (req, res) => {
 cartRouter.get('/delete_cart/:id', async (req, res) => {
   const id = req.params.id
   try {
-      cart.deleteOne({ _id: id }).then((data) => {
+      cartModel.deleteOne({ _id: id }).then((data) => {
           if (data.deletedCount === 1) {
               return res.status(200).json({
                   success: true,

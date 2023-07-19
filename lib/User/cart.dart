@@ -15,11 +15,9 @@ import '../Admin/model/productmodel.dart';
 import 'placeorder.dart';
 
 class Cart extends StatefulWidget {
+  Cart({this.product, Key? key}) : super(key: key);
 
-  Cart({ this.product,Key? key}) : super(key: key);
-
-
-  productModel ? product;
+  productModel? product;
 
   @override
   State<Cart> createState() => _CartState();
@@ -33,6 +31,7 @@ final List<String> containerImages = [
 ];
 
 int simpleIntInput = 1;
+String dataew='';
 final List<String> imageTitles = ["Rice", "Meat", "Vegetables", "Fruits"];
 final List<String> Titles = [
   "Rs100-2 items",
@@ -40,22 +39,25 @@ final List<String> Titles = [
   "Rs50-4 items",
   "Rs60.20-3 items"
 ];
-class _CartState extends State<Cart> {
 
-  ApiService client=ApiService();
+class _CartState extends State<Cart> {
+  ApiService client = ApiService();
   late SharedPreferences prefs;
-  String user_id='';
+  String user_id = '';
   int? total;
+
   void initState() {
     // TODO: implement initState
     super.initState();
     fetchcart();
   }
+
   Future<List<CartModel>> fetchcart() async {
     prefs = await SharedPreferences.getInstance();
     user_id = (prefs.getString('user_id') ?? '');
     print("uid${user_id}");
-    var response = await Api().getData('/cart/view_cart/' + user_id.replaceAll('"', ''));
+    var response =
+        await Api().getData('/cart/view_cart/' + user_id.replaceAll('"', ''));
     if (response.statusCode == 200) {
       var items = json.decode(response.body);
       print(("items${items}"));
@@ -68,8 +70,10 @@ class _CartState extends State<Cart> {
       return products;
     }
   }
+
   _deleteData(String id) async {
-    var res =await Api().getData('/cart/delete_cart/' + id.replaceAll('"', ''));
+    var res =
+        await Api().getData('/cart/delete_cart/' + id.replaceAll('"', ''));
     if (res.statusCode == 200) {
       setState(() {
         Alert(
@@ -82,7 +86,7 @@ class _CartState extends State<Cart> {
                 "OK",
                 style: TextStyle(color: Colors.white, fontSize: 20),
               ),
-              onPressed: () =>  Navigator.pushReplacement(
+              onPressed: () => Navigator.pushReplacement(
                   context, MaterialPageRoute(builder: (context) => Cart())),
               color: Colors.blueAccent,
               radius: BorderRadius.circular(0.0),
@@ -90,11 +94,9 @@ class _CartState extends State<Cart> {
           ],
         ).show();
 
-
         Fluttertoast.showToast(
           msg: "Removed from cart",
           backgroundColor: Colors.grey,
-
         );
       });
     } else {
@@ -108,11 +110,12 @@ class _CartState extends State<Cart> {
   }
 
   _increment(String id) async {
-    setState(() {
+  setState(() {
       var _isLoading = true;
     });
-
-    var res =  await Api().getData('/cart/increment/' + id.replaceAll('"', ''));   var body = json.decode(res.body);
+  print(id);
+    var res = await Api().getData('/cart/increment/' + id.replaceAll('"', ''));
+    var body = json.decode(res.body);
     print(body);
     if (body['success'] == true) {
       print(body);
@@ -138,16 +141,12 @@ class _CartState extends State<Cart> {
       var _isLoading = true;
     });
 
-    var res = await Api().getData(
-        '/cart/decrement/' + id.replaceAll('"', ''));
+    var res = await Api().getData('/cart/decrement/' + id.replaceAll('"', ''));
     var body = json.decode(res.body);
     print(body);
     if (body['success'] == true) {
       print(body);
-      setState(() {
-
-      });
-
+      setState(() {});
     } else {
       Fluttertoast.showToast(
         msg: body['message'].toString(),
@@ -157,7 +156,6 @@ class _CartState extends State<Cart> {
   }
 
   @override
-
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -186,92 +184,109 @@ class _CartState extends State<Cart> {
                 style: TextStyle(fontWeight: FontWeight.w400, fontSize: 40),
               ),
             ),
-        FutureBuilder<List<CartModel>>(
-        future: fetchcart(),
-    builder: (BuildContext cfetchproductontext,
-    AsyncSnapshot<List<CartModel>> snapshot) {
+            FutureBuilder<List<CartModel>>(
+              future: fetchcart(),
+              builder: (BuildContext cfetchproductontext,
+                  AsyncSnapshot<List<CartModel>> snapshot) {
+                if (snapshot.hasData) {
 
-    if (snapshot.hasData) {
-    return  ListView.builder(
-              shrinkWrap: true,
-              itemCount: snapshot.data!.length,
-              itemBuilder: (context, index) {
-                return Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                  child: Card(
-                    child: Padding(
-                      padding: const EdgeInsets.all(10),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          CircleAvatar(
-                            backgroundImage: AssetImage("server/public/images/" +snapshot.data![index].image),
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(snapshot.data![index].productname),
-                              Text(snapshot.data![index].price),
-                            ],
-                          ),
-                          Column(
-                            children: [
-                              IconButton(
-                                icon: Icon(
-                                  Icons.delete,
+                  return ListView.builder(
+
+                    shrinkWrap: true,
+                    itemCount: snapshot.data!.length,
+                    itemBuilder: (context, index) {
+                      String img=snapshot.data![index].image;
+                      String pe=snapshot.data![index].productname;
+                      String ts=snapshot.data![index].total.toString();
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                        child: Card(
+                          child: Padding(
+                            padding: const EdgeInsets.all(10),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                CircleAvatar(
+                                  backgroundImage: AssetImage(
+                                      "server/public/images/" +
+                                          snapshot.data![index].image),
                                 ),
-                                onPressed: () async {
-                                  setState(() {
-                                    _deleteData(snapshot.data![index].id);
-                                  });
-                                },
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  Container(
-                                    width: 30,
-                                    height: 30,
-                                    child: FloatingActionButton(
-                                      onPressed: () async {
-                                        setState(() {
-                                          _decrement(snapshot.data![index].id);
-                                        });
-                                      },
-                                      backgroundColor: Colors.white60,
-                                      child:
-                                      Icon(Icons.remove, color: Colors.black),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 10,
-                                  ),
-                                  Text(
-                                    snapshot.data![index].quantity,
-                                  ),
-                                  SizedBox(
-                                    width: 10,
-                                  ),
-                                  Container(
-                                    width: 30,
-                                    height: 30,
-                                    child: FloatingActionButton(
-                                      onPressed: () async {
-                                        setState(() {
-                                          _increment(snapshot.data![index].id);
-                                        });
-                                      },
-                                      backgroundColor: Colors.white60,
-                                      child: Icon(Icons.add, color: Colors.black),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          )
 
-                         /* QuantityInput(
+
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(snapshot.data![index].productname),
+                                    Text(snapshot.data![index].total.toString()),
+                                  ],
+                                ),
+
+                                   Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Column(
+                                      children: [
+                                        IconButton(
+                                          icon: Icon(
+                                            Icons.delete,
+                                          ),
+                                          onPressed: () async {
+                                            setState(() {
+                                              _deleteData(snapshot.data![index].id);
+                                            });
+                                          },
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceEvenly,
+                                          children: [
+                                            Container(
+                                              width: 30,
+                                              height: 30,
+                                              child: FloatingActionButton(
+                                                onPressed: () async {
+                                                  setState(() {
+                                                    _decrement(
+                                                        snapshot.data![index].id);
+                                                  });
+                                                },
+                                                backgroundColor: Colors.white60,
+                                                child: Icon(Icons.remove,
+                                                    color: Colors.black),
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              width: 10,
+                                            ),
+                                            Text(
+                                              snapshot.data![index].quantity,
+                                            ),
+                                            SizedBox(
+                                              width: 10,
+                                            ),
+                                            Container(
+                                              width: 30,
+                                              height: 30,
+                                              child: FloatingActionButton(
+                                                onPressed: () async {
+                                                  setState(() {
+                                                    _increment(
+                                                        snapshot.data![index].id);
+                                                  });
+                                                },
+                                                backgroundColor: Colors.white60,
+                                                child: Icon(Icons.add,
+                                                    color: Colors.black),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+
+
+                                /* QuantityInput(
                             value: simpleIntInput,
                             onChanged: (value) => setState(
                                   () => simpleIntInput = int.parse(value.replaceAll(',', '')),
@@ -286,20 +301,17 @@ class _CartState extends State<Cart> {
                               color: Colors.blue,
                             ),
                           ),*/
-                        ],
-
-                      ),
-                    ),
-                  ),
-                );
+                              ],
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                  );
+                }
+                return Center(child: CircularProgressIndicator());
               },
-            );
-
-    }
-    return Center(child: CircularProgressIndicator());
-    },
-        ),
-
+            ),
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: SizedBox(
@@ -308,7 +320,9 @@ class _CartState extends State<Cart> {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) =>placeorder()),
+                      MaterialPageRoute(builder: (context) => placeorder(
+
+                      )),
                     );
                   },
                   child: Padding(

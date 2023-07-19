@@ -9,6 +9,7 @@ import 'package:trip/Admin/model/coutermodel.dart';
 import 'package:trip/Admin/model/deliveryModel.dart';
 import 'package:trip/Admin/model/godowModel.dart';
 import 'package:trip/Admin/model/paymentModel.dart';
+import 'package:trip/Admin/model/placeorderModel.dart';
 import 'package:trip/Admin/model/productmodel.dart';
 import 'package:trip/Admin/model/usermodel.dart';
 import 'package:trip/Api/api.dart';
@@ -205,6 +206,20 @@ class ApiService {
       return products;
     } else {
       List<categoryModel> products = [];
+      return products;
+    }
+  }
+  Future<List<placeorderModel>> fetchplaceorder(String userid) async {
+    var response = await Api().getData('/cart/'+userid);
+    if (response.statusCode == 200) {
+      var items = json.decode(response.body);
+      print((items));
+
+      List<placeorderModel> products = List<placeorderModel>.from(
+          items['data'].map((e) => placeorderModel.fromJson(e)).toList());
+      return products;
+    } else {
+      List<placeorderModel> products = [];
       return products;
     }
   }
