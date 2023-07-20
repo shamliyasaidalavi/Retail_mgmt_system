@@ -56,6 +56,7 @@ productRouter.post('/product', async function (req, res) {
         description: req.body.description,
         category: req.body.category, 
       product_image:req.body.product_image,
+      
     };
     const datas = await productModel(data).save()
     console.log(datas);

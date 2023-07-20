@@ -209,18 +209,18 @@ class ApiService {
       return products;
     }
   }
-  Future<List<placeorderModel>> fetchplaceorder(String userid) async {
-    var response = await Api().getData('/cart/'+userid);
-    if (response.statusCode == 200) {
-      var items = json.decode(response.body);
-      print((items));
-
-      List<placeorderModel> products = List<placeorderModel>.from(
-          items['data'].map((e) => placeorderModel.fromJson(e)).toList());
-      return products;
-    } else {
-      List<placeorderModel> products = [];
-      return products;
-    }
-  }
+  // Future<List<placeorderModel>> fetchplaceorder(String userid) async {
+  //   var response = await Api().getData('/cart/view_order'+userid);
+  //   if (response.statusCode == 200) {
+  //     var items = json.decode(response.body);
+  //     print((items));
+  //
+  //     List<placeorderModel> products = List<placeorderModel>.from(
+  //         items['data'].map((e) => placeorderModel.fromJson(e)).toList());
+  //     return products;
+  //   } else {
+  //     List<placeorderModel> products = [];
+  //     return products;
+  //   }
+  // }
 }

@@ -9,6 +9,8 @@ const productSchema = new schema({
     description: { type: String },
     category: { type: String },
     product_image: { type: String },
+    total:{type:String},
+    total_amount:{type:String},
     
 })
 

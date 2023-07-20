@@ -10,6 +10,7 @@ import 'package:trip/Api/api.dart';
 import 'package:trip/Api/api_sevices.dart';
 
 import 'package:trip/User/paymet.dart';
+import 'package:trip/User/plcorder.dart';
 
 import '../Admin/model/productmodel.dart';
 import 'placeorder.dart';
@@ -320,7 +321,7 @@ class _CartState extends State<Cart> {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => placeorder(
+                      MaterialPageRoute(builder: (context) => placeorder(user_id:user_id
 
                       )),
                     );

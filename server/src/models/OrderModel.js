@@ -3,11 +3,16 @@ const mongoose = require("mongoose");
 const schema = mongoose.Schema
 
 const orderSchema = new schema({
-    order_name: { type: String },
-    order_id: { type: String },
+    user_id: { type: mongoose.Types.ObjectId,ref:'user_tb' },
+    
+    product_id: { type: mongoose.Types.ObjectId,ref:'product_tb' },
+
     quantity: { type: String },
     price: { type: String },
-    date: { type: String },
+    total: { type: String },
+    totalValue: { type: String },
+
+    status: { type: String },
     
     
 })

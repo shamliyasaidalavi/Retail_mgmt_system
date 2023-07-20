@@ -7,6 +7,7 @@ class placeorderModel {
   final String image;
   final int total;
   final String id;
+  final String totalValue;
 
   placeorderModel({
     required this.productname,
@@ -15,6 +16,7 @@ class placeorderModel {
     required this.image,
     required this.total,
     required this.id,
+    required this.totalValue,
   });
 
   factory placeorderModel.fromJson(Map<String, dynamic> json) {
@@ -24,7 +26,9 @@ class placeorderModel {
       quantity: json['quantity'],
       image: json['product_image'],
       total: json['total'],
+      totalValue: json['total_amount'],
       id: json['_id'],
+
     );
   }
 }

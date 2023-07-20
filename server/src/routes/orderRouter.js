@@ -83,12 +83,12 @@ orderRouter.get('/view_order/:id', async (req, res) => {
 orderRouter.post('/order', async function (req, res) {
   try {
     const data = {
-        order_name: req.body. order_name ,
-        order_id: req.body.order_id,
-        quantity: req.body.quantity,
-        price: req.body.price,
-        date: req.body.date, 
-       
+        product_id: product.product_id,
+                        user_id: product.user_id,
+                        price: $first.price,
+                        total: $first.total,
+                        quantity: $first.quantity,
+                        status: 0,
       
     };
     const datas = await orderModel(data).save()
